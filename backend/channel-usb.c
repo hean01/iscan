@@ -286,5 +286,5 @@ channel_interpreter_dtor (channel *self)
 static size_t
 channel_usb_max_request_size (const channel *self)
 {
-  return (self->interpreter ? 32 : 128) * 1024;
+  return (self->interpreter ? 32 : 128) * 2048;
 }
