@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<scanner_entry>
+
+  <interfaces>
+    <usb vendor="04b8" product="012b"/>
+    <net status="unsupported" note="option"/>
+  </interfaces>
+
+  <profile-set>
+    <profile type="reflective">
+      <rr value=" 1.1978"/><rg value="-0.1417"/><rb value="-0.0561"/>
+      <gr value="-0.0852"/><gg value=" 1.161"/><gb value="-0.0758"/>
+      <br value="-0.0395"/><bg value="-0.3212"/><bb value=" 1.3607"/>
+    </profile>
+    <profile type="color negative">
+      <rr value=" 1.000"/><rg value="0.0009"/><rb value="-0.0009"/>
+      <gr value="-0.1268"/><gg value=" 1.0523"/><gb value="0.0745"/>
+      <br value="-0.0075"/><bg value="-0.0873"/><bb value=" 1.0948"/>
+    </profile>
+    <profile type="positive">
+      <rr value=" 1.4475"/><rg value="-0.3957"/><rb value="-0.0518"/>
+      <gr value="-0.0138"/><gg value=" 1.0644"/><gb value="-0.0506"/>
+      <br value="-0.0199"/><bg value="-0.205"/><bb value=" 1.2249"/>
+    </profile>
+  </profile-set>
+
+  <device>
+    <firmware name="GT-X970"/>
+  </device>
+
+  <command-set type="extended" level="B8">
+    <command name="set_focus_position" code="1B70" status="disabled"/>
+    <command name="feed" code="19" status="disabled"/>
+    <command name="lock"/>
+    <command name="unlock"/>
+  </command-set>
+
+</scanner_entry>

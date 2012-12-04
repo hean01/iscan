@@ -1,0 +1,40 @@
+#  control -- information about source and binary packages
+#  Copyright (C) 2007, 2009  EPSON AVASYS CORPORATION
+#
+#  This file is part of the "Image Scan!" build infra-structure.
+#
+#  The "Image Scan!" build infra-structure is free software.
+#  You can redistribute it and/or modify it under the terms of the GNU
+#  General Public License as published by the Free Software Foundation;
+#  either version 2 of the License or at your option any later version.
+#
+#  This program is distributed in the hope that it will be useful, but
+#  WITHOUT ANY WARRANTY;  without even the implied warranty of FITNESS
+#  FOR A PARTICULAR PURPOSE or MERCHANTABILITY.
+#  See the GNU General Public License for more details.
+#
+#  You should have received a verbatim copy of the GNU General Public
+#  License along with this program; if not, write to:
+#
+#	 Free Software Foundation, Inc.
+#	 59 Temple Place, Suite 330
+#	 Boston, MA  02111-1307	 USA
+
+
+Source: @PACKAGE_TARNAME@
+Section: non-free/graphics
+Priority: extra
+Maintainer: @scm_deb_maint@ <@scm_deb_maint_email@>
+Build-Depends: cdbs, debhelper (>= 5.0.42), libsane-dev, libltdl7-dev | libltdl3-dev, libgtk2.0-dev, libpng-dev, libjpeg-dev, libgimp2.0-dev, libtiff4-dev, libxml2-dev, libusb-1.0-0-dev | libusb-dev
+Standards-Version: 3.7.2
+
+Package: @PACKAGE_TARNAME@
+Architecture: i386 amd64
+Depends: iscan-data, ${shlibs:Depends}, ${misc:Depends}
+Recommends: gimp
+Conflicts: iscan-network-nt (<< 1.1), iscan-plugin-cx4400 (<< 2.1), iscan-plugin-gt-7200 (<< 2.1), iscan-plugin-gt-7300 (<< 2.1), iscan-plugin-gt-9400 (<< 2.1), iscan-plugin-gt-f500 (<< 2.1), iscan-plugin-gt-f520 (<< 2.1), iscan-plugin-gt-f600 (<< 2.1), iscan-plugin-gt-f670 (<< 2.1), iscan-plugin-gt-f700 (<< 2.1), iscan-plugin-gt-s600 (<< 2.1), iscan-plugin-gt-x750 (<< 2.1)
+Replaces: libsane-extras
+Description: @scm_src_summary@
+@scm_src_header@
+.
+@scm_src_footer@

@@ -1,0 +1,46 @@
+--- ltmain.sh	2006-06-20 04:29:20.000000000 +0900
++++ ltmain.sh	2007-07-13 20:02:36.000000000 +0900
+@@ -3926,6 +3926,23 @@
+ 	  dlname=$soname
+ 	fi
+ 
++## SANE modification (start)
++## Moved here from just before the enclosing 'fi' statement so we can
++## safely rewrite the soname before anything gets run.
++	# If -module or -export-dynamic was specified, set the dlname.
++	if test "$module" = yes || test "$export_dynamic" = yes; then
++	  # On all known operating systems, these are identical.
++	  dlname="$soname"
++	fi
++## The SANE API recommends/requires(?) that backends are made available
++## with the soname "libsane" instead of "libsane-$backend".  The dlname
++## should contain the -$backend part for libsane-dll to work.
++	case $host in
++	  *)
++	    soname=`echo $soname | sed -e "s/libsane-[A-Za-z_0-9]*/libsane/g"`
++	esac
++## SANE modification (end)
++
+ 	lib="$output_objdir/$realname"
+ 	linknames=
+ 	for link
+@@ -4189,11 +4206,14 @@
+ 	  fi
+ 	done
+ 
+-	# If -module or -export-dynamic was specified, set the dlname.
+-	if test "$module" = yes || test "$export_dynamic" = yes; then
+-	  # On all known operating systems, these are identical.
+-	  dlname="$soname"
+-	fi
++## SANE modification (start)
++## Moved before the soname modification needed by SANE.
++##	# If -module or -export-dynamic was specified, set the dlname.
++##	if test "$module" = yes || test "$export_dynamic" = yes; then
++##	  # On all known operating systems, these are identical.
++##	  dlname="$soname"
++##	fi
++## SANE modification (end)
+       fi
+       ;;
+ 

@@ -1,0 +1,15 @@
+# default: off
+# description: SANE network scanner daemon
+#	Please note that this service is registered by the IANA under
+#	the name "sane-port".  If your /etc/services file only has a
+#	sane-port entry, rename the service in this file to match it.
+#	Alternatively, you can add an alias in /etc/services.
+service sane
+{
+   disabled    = no
+   port        = 6566
+   socket_type = stream
+   wait        = no
+   user        = root
+   server      = /usr/sbin/saned
+}

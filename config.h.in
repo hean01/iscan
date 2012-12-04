@@ -1,0 +1,503 @@
+/* config.h.in.  Generated from configure.ac by autoheader.  */
+
+/* Define to 1 if the `closedir' function returns void instead of `int'. */
+#undef CLOSEDIR_VOID
+
+/* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
+   systems. This function is required for `alloca.c' support on those systems.
+   */
+#undef CRAY_STACKSEG_END
+
+/* Define to 1 if using `alloca.c'. */
+#undef C_ALLOCA
+
+/* Define to 1 if translation of program messages to the user's native
+   language is requested. */
+#undef ENABLE_NLS
+
+/* Define to 1 if you have the `alarm' function. */
+#undef HAVE_ALARM
+
+/* Define to 1 if you have `alloca', as a function or macro. */
+#undef HAVE_ALLOCA
+
+/* Define to 1 if you have <alloca.h> and it should be used (not on Ultrix).
+   */
+#undef HAVE_ALLOCA_H
+
+/* Define to 1 if you have the gimp library. */
+#undef HAVE_ANY_GIMP
+
+/* Define to 1 if you have the `argz_append' function. */
+#undef HAVE_ARGZ_APPEND
+
+/* Define to 1 if you have the `argz_create_sep' function. */
+#undef HAVE_ARGZ_CREATE_SEP
+
+/* Define to 1 if you have the <argz.h> header file. */
+#undef HAVE_ARGZ_H
+
+/* Define to 1 if you have the `argz_insert' function. */
+#undef HAVE_ARGZ_INSERT
+
+/* Define to 1 if you have the `argz_next' function. */
+#undef HAVE_ARGZ_NEXT
+
+/* Define to 1 if you have the `argz_stringify' function. */
+#undef HAVE_ARGZ_STRINGIFY
+
+/* Define to 1 if you have the <assert.h> header file. */
+#undef HAVE_ASSERT_H
+
+/* Define to 1 if you have the `atexit' function. */
+#undef HAVE_ATEXIT
+
+/* Define to 1 if you have the `bcopy' function. */
+#undef HAVE_BCOPY
+
+/* Define to 1 if you have the `bzero' function. */
+#undef HAVE_BZERO
+
+/* Define to 1 if you have the `closedir' function. */
+#undef HAVE_CLOSEDIR
+
+/* Define to 1 if you have the <ctype.h> header file. */
+#undef HAVE_CTYPE_H
+
+/* Define if the GNU dcgettext() function is already present or preinstalled.
+   */
+#undef HAVE_DCGETTEXT
+
+/* Define to 1 if you have the declaration of `tzname', and to 0 if you don't.
+   */
+#undef HAVE_DECL_TZNAME
+
+/* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
+   */
+#undef HAVE_DIRENT_H
+
+/* Define if you have the GNU dld library. */
+#undef HAVE_DLD
+
+/* Define to 1 if you have the <dld.h> header file. */
+#undef HAVE_DLD_H
+
+/* Define to 1 if you have the `dlerror' function. */
+#undef HAVE_DLERROR
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
+
+/* Define to 1 if you have the <dl.h> header file. */
+#undef HAVE_DL_H
+
+/* Define to 1 if you don't have `vprintf' but do have `_doprnt.' */
+#undef HAVE_DOPRNT
+
+/* Define if you have the _dyld_func_lookup function. */
+#undef HAVE_DYLD
+
+/* Define to 1 if you have the <errno.h> header file. */
+#undef HAVE_ERRNO_H
+
+/* Define to 1 if the system has the type `error_t'. */
+#undef HAVE_ERROR_T
+
+/* Define to 1 if you have the <fcntl.h> header file. */
+#undef HAVE_FCNTL_H
+
+/* Define to 1 if you have the `floor' function. */
+#undef HAVE_FLOOR
+
+/* Define to 1 if you have the `fork' function. */
+#undef HAVE_FORK
+
+/* Define if the GNU gettext() function is already present or preinstalled. */
+#undef HAVE_GETTEXT
+
+/* Define to 1 if you have the gimp-2.0 library. */
+#undef HAVE_GIMP_2
+
+/* Define to 1 if you have the gtk+-2.0 library. */
+#undef HAVE_GTK_2
+
+/* Define to 1 if you have the <gtk/gtk.h> header file. */
+#undef HAVE_GTK_GTK_H
+
+/* Define if you have the iconv() function. */
+#undef HAVE_ICONV
+
+/* Define to 1 if you have the `index' function. */
+#undef HAVE_INDEX
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the <jpeglib.h> header file. */
+#undef HAVE_JPEGLIB_H
+
+/* Define if you have the libdl library or equivalent. */
+#undef HAVE_LIBDL
+
+/* Define to 1 if you have the <libintl.h> header file. */
+#undef HAVE_LIBINTL_H
+
+/* Define to 1 if you have the `sane' library (-lsane). */
+#undef HAVE_LIBSANE
+
+/* Define to 1 if you have the `usb' library (-lusb). */
+#undef HAVE_LIBUSB
+
+/* Define to 1 if you have the libusb-1.0 library. */
+#undef HAVE_LIBUSB_1_0
+
+/* Define to 1 if you have the <limits.h> header file. */
+#undef HAVE_LIMITS_H
+
+/* Define to 1 if you have the <locale.h> header file. */
+#undef HAVE_LOCALE_H
+
+/* Define to 1 if you have the <mach-o/dyld.h> header file. */
+#undef HAVE_MACH_O_DYLD_H
+
+/* Define to 1 if your system has a GNU libc compatible `malloc' function, and
+   to 0 otherwise. */
+#undef HAVE_MALLOC
+
+/* Define to 1 if you have the <malloc.h> header file. */
+#undef HAVE_MALLOC_H
+
+/* Define to 1 if you have the `memcpy' function. */
+#undef HAVE_MEMCPY
+
+/* Define to 1 if you have the `memmove' function. */
+#undef HAVE_MEMMOVE
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the `memset' function. */
+#undef HAVE_MEMSET
+
+/* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
+#undef HAVE_NDIR_H
+
+/* Define to 1 if you have the `opendir' function. */
+#undef HAVE_OPENDIR
+
+/* Define to 1 if you have the <png.h> header file. */
+#undef HAVE_PNG_H
+
+/* Define if libtool can extract symbol lists from object files. */
+#undef HAVE_PRELOADED_SYMBOLS
+
+/* Define to 1 if you have the `readdir' function. */
+#undef HAVE_READDIR
+
+/* Define to 1 if your system has a GNU libc compatible `realloc' function,
+   and to 0 otherwise. */
+#undef HAVE_REALLOC
+
+/* Define to 1 if you have the `regcomp' function. */
+#undef HAVE_REGCOMP
+
+/* Define to 1 if you have the `rindex' function. */
+#undef HAVE_RINDEX
+
+/* Define to 1 if you have the <sane/sane.h> header file. */
+#undef HAVE_SANE_SANE_H
+
+/* Define to 1 if you have the <scsi/sg.h> header file. */
+#undef HAVE_SCSI_SG_H
+
+/* Define to 1 if you have the `select' function. */
+#undef HAVE_SELECT
+
+/* Define to 1 if you have the `setenv' function. */
+#undef HAVE_SETENV
+
+/* Define to 1 if you have the `setlocale' function. */
+#undef HAVE_SETLOCALE
+
+/* Define if you have the shl_load function. */
+#undef HAVE_SHL_LOAD
+
+/* Define to 1 if you have the `sigprocmask' function. */
+#undef HAVE_SIGPROCMASK
+
+/* Define to 1 if `stat' has the bug that it succeeds when given the
+   zero-length file name argument. */
+#undef HAVE_STAT_EMPTY_STRING_BUG
+
+/* Define to 1 if stdbool.h conforms to C99. */
+#undef HAVE_STDBOOL_H
+
+/* Define to 1 if you have the <stddef.h> header file. */
+#undef HAVE_STDDEF_H
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#undef HAVE_STDIO_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the `strcasecmp' function. */
+#undef HAVE_STRCASECMP
+
+/* Define to 1 if you have the `strchr' function. */
+#undef HAVE_STRCHR
+
+/* Define to 1 if you have the `strcmp' function. */
+#undef HAVE_STRCMP
+
+/* Define to 1 if you have the `strdup' function. */
+#undef HAVE_STRDUP
+
+/* Define to 1 if you have the `strerror' function. */
+#undef HAVE_STRERROR
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the `strncasecmp' function. */
+#undef HAVE_STRNCASECMP
+
+/* Define to 1 if you have the `strndup' function. */
+#undef HAVE_STRNDUP
+
+/* Define to 1 if you have the `strrchr' function. */
+#undef HAVE_STRRCHR
+
+/* Define to 1 if you have the `strstr' function. */
+#undef HAVE_STRSTR
+
+/* Define to 1 if you have the `strtol' function. */
+#undef HAVE_STRTOL
+
+/* Define to 1 if you have the `strtoul' function. */
+#undef HAVE_STRTOUL
+
+/* Define to 1 if `tm_zone' is member of `struct tm'. */
+#undef HAVE_STRUCT_TM_TM_ZONE
+
+/* Define to 1 if you have the <syslog.h> header file. */
+#undef HAVE_SYSLOG_H
+
+/* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
+   */
+#undef HAVE_SYS_DIR_H
+
+/* Define to 1 if you have the <sys/dl.h> header file. */
+#undef HAVE_SYS_DL_H
+
+/* Define to 1 if you have the <sys/ioctl.h> header file. */
+#undef HAVE_SYS_IOCTL_H
+
+/* Define to 1 if you have the <sys/ndir.h> header file, and it defines `DIR'.
+   */
+#undef HAVE_SYS_NDIR_H
+
+/* Define to 1 if you have the <sys/param.h> header file. */
+#undef HAVE_SYS_PARAM_H
+
+/* Define to 1 if you have the <sys/select.h> header file. */
+#undef HAVE_SYS_SELECT_H
+
+/* Define to 1 if you have the <sys/socket.h> header file. */
+#undef HAVE_SYS_SOCKET_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#undef HAVE_SYS_TIME_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have <sys/wait.h> that is POSIX.1 compatible. */
+#undef HAVE_SYS_WAIT_H
+
+/* Define to 1 if you have the <tiffio.h> header file. */
+#undef HAVE_TIFFIO_H
+
+/* Define to 1 if your `struct tm' has `tm_zone'. Deprecated, use
+   `HAVE_STRUCT_TM_TM_ZONE' instead. */
+#undef HAVE_TM_ZONE
+
+/* Define to 1 if you don't have `tm_zone' but do have the external array
+   `tzname'. */
+#undef HAVE_TZNAME
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to 1 if you have the `vfork' function. */
+#undef HAVE_VFORK
+
+/* Define to 1 if you have the <vfork.h> header file. */
+#undef HAVE_VFORK_H
+
+/* Define to 1 if you have the `vprintf' function. */
+#undef HAVE_VPRINTF
+
+/* Define to 1 if `fork' works. */
+#undef HAVE_WORKING_FORK
+
+/* Define to 1 if `vfork' works. */
+#undef HAVE_WORKING_VFORK
+
+/* Define to 1 if the system has the type `_Bool'. */
+#undef HAVE__BOOL
+
+/* Run-time architecture tag */
+#undef ISCAN_HOST_CPU
+
+/* Define to 1 if `lstat' dereferences a symlink specified with a trailing
+   slash. */
+#undef LSTAT_FOLLOWS_SLASHED_SYMLINK
+
+/* Define if the OS needs help to load dependent libraries for dlopen(). */
+#undef LTDL_DLOPEN_DEPLIBS
+
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LTDL_OBJDIR
+
+/* Define to the name of the environment variable that determines the dynamic
+   library search path. */
+#undef LTDL_SHLIBPATH_VAR
+
+/* Define to the extension used for shared libraries, say, ".so". */
+#undef LTDL_SHLIB_EXT
+
+/* Define to the system default library search path. */
+#undef LTDL_SYSSEARCHPATH
+
+/* Define if dlsym() requires a leading underscore in symbol names. */
+#undef NEED_USCORE
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Major version of the SANE API that we claim to support. */
+#undef SANE_MAJOR
+
+/* Minor version of the SANE API that we claim to support. */
+#undef SANE_MINOR
+
+/* Define to the type of arg 1 for `select'. */
+#undef SELECT_TYPE_ARG1
+
+/* Define to the type of args 2, 3 and 4 for `select'. */
+#undef SELECT_TYPE_ARG234
+
+/* Define to the type of arg 5 for `select'. */
+#undef SELECT_TYPE_ARG5
+
+/* If using the C implementation of alloca, define if you know the
+   direction of stack growth for your system; otherwise it will be
+   automatically deduced at runtime.
+	STACK_DIRECTION > 0 => grows toward higher addresses
+	STACK_DIRECTION < 0 => grows toward lower addresses
+	STACK_DIRECTION = 0 => direction of growth unknown */
+#undef STACK_DIRECTION
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
+#undef TIME_WITH_SYS_TIME
+
+/* Define to 1 if your <sys/time.h> declares `struct tm'. */
+#undef TM_IN_SYS_TIME
+
+/* Version number of package */
+#undef VERSION
+
+/* Define to 1 if on AIX 3.
+   System headers sometimes define this.
+   We just want to avoid a redefinition error message.  */
+#ifndef _ALL_SOURCE
+# undef _ALL_SOURCE
+#endif
+
+/* Enable GNU extensions on systems that have them.  */
+#ifndef _GNU_SOURCE
+# undef _GNU_SOURCE
+#endif
+
+/* Define to 1 if on MINIX. */
+#undef _MINIX
+
+/* Define to 2 if the system does not provide POSIX.1 features except with
+   this defined. */
+#undef _POSIX_1_SOURCE
+
+/* Define to 1 if you need to in order for `stat' and other things to work. */
+#undef _POSIX_SOURCE
+
+/* Enable extensions on Solaris.  */
+#ifndef __EXTENSIONS__
+# undef __EXTENSIONS__
+#endif
+#ifndef _POSIX_PTHREAD_SEMANTICS
+# undef _POSIX_PTHREAD_SEMANTICS
+#endif
+#ifndef _TANDEM_SOURCE
+# undef _TANDEM_SOURCE
+#endif
+
+/* Define to empty if `const' does not conform to ANSI C. */
+#undef const
+
+/* Define to a type to use for `error_t' if it is not otherwise available. */
+#undef error_t
+
+/* Define to `int' if <sys/types.h> doesn't define. */
+#undef gid_t
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+#undef inline
+#endif
+
+/* Define to rpl_malloc if the replacement function should be used. */
+#undef malloc
+
+/* Define to `int' if <sys/types.h> does not define. */
+#undef pid_t
+
+/* Define to rpl_realloc if the replacement function should be used. */
+#undef realloc
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+#undef size_t
+
+/* Define to `int' if <sys/types.h> doesn't define. */
+#undef uid_t
+
+/* Define as `fork' if `vfork' does not work. */
+#undef vfork

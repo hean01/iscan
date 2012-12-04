@@ -1,0 +1,27 @@
+# POTFILES.in -- source files containing translatable strings
+# Copyright (C) 2001-2004  SEIKO EPSON CORPORATION
+
+# Package source files
+frontend/file-selector.cc
+frontend/pisa_aleart_dialog.cc
+frontend/pisa_change_unit.cc
+frontend/pisa_configuration.cc
+frontend/pisa_error.cc
+frontend/pisa_gamma_correction.cc
+frontend/pisa_gimp.cc
+frontend/pisa_image_controls.cc
+frontend/pisa_img_converter.cc
+frontend/pisa_main.cc
+frontend/pisa_main_window.cc
+frontend/pisa_marquee.cc
+frontend/pisa_preference.cc
+frontend/pisa_preview_window.cc
+frontend/pisa_progress_window.cc
+frontend/pisa_sane_scan.cc
+frontend/pisa_scan_manager.cc
+frontend/pisa_scan_selector.cc
+frontend/pisa_scan_tool.cc
+frontend/pisa_settings.cc
+frontend/pisa_tool.cc
+frontend/pisa_view_manager.cc
+frontend/xpm_data.cc

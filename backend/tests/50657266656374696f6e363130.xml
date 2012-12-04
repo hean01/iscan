@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<scanner_entry>
+
+  <interfaces>
+    <usb vendor="04b8" product="012b"/>
+    <net status="unsupported" note="option"/>
+  </interfaces>
+
+  <device>
+    <firmware name="Perfection610"/>
+    <model name="Perfection 610"/>
+  </device>
+
+  <profile-set>
+    <profile type="reflective">
+      <rr value=" 1.1442"/><rg value="-0.0705"/><rb value="-0.0737"/>
+      <gr value="-0.0702"/><gg value=" 1.1013"/><gb value="-0.0311"/>
+      <br value="-0.0080"/><bg value="-0.3588"/><bb value=" 1.3668"/>
+    </profile>
+  </profile-set>
+
+  <command-set type="extended" level="B8">
+    <command name="set_focus_position" code="1B70" status="disabled"/>
+    <command name="feed" code="19" status="disabled"/>
+  </command-set>
+
+</scanner_entry>

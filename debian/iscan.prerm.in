@@ -1,0 +1,71 @@
+#! /bin/sh
+#  iscan.prerm -- things to do before package removal
+#  Copyright (C) 2008, 2009  SEIKO EPSON CORPORATION
+#
+#  License: GPLv2+
+
+
+#DEBHELPER#
+
+
+STATE_DIR=@DEB_CONFIGURE_LOCALSTATEDIR@/lib/@DEB_SOURCE_PACKAGE@
+
+VERSION=@DEB_VERSION@
+
+SYSCONFDIR=@DEB_CONFIGURE_SYSCONFDIR@
+
+PATH=$PKGLIBDIR:$PATH
+
+# This is a copy of the function of the same name in the postrm script
+needs_restore () {
+    vers=`dpkg-query --show --showformat='${Version}' libsane-extras`
+    status=`dpkg-query --show --showformat='${Status}' libsane-extras \
+            | cut -d' ' -f1`
+    test x"install" = x"$status" -o x"deinstall" = x"$status" \
+    && dpkg --compare-versions "$vers" lt 1.0.19.12 >/dev/null 2>&1
+}
+
+case "$1" in
+
+    remove|upgrade)
+	if  test -f $STATE_DIR/interpreter; then
+	    test -s $STATE_DIR/interpreter || rm $STATE_DIR/interpreter
+	fi
+	;;
+
+    failed-upgrade|deconfigure)
+	;;
+
+    *)
+	echo "postinst called with unknown argument \`$1'" >&2
+	exit 1
+	;;
+
+esac
+
+case "$1" in
+
+    remove)
+	if test /etc = "$SYSCONFDIR" && test -e /etc/sane.d/epkowa.conf \
+	   && needs_restore; then
+	    # comment out any modern keywords so that libsane-extra's
+	    # epkowa doesn't choke on them
+	    sed -i '/^$/b; /^[ \t]*#/b; /^[ \t]*usb/b; /^[ \t]*scsi/b;
+                 /^[ \t]*pio/b; s/\(.*\)/#\1/' /etc/sane.d/epkowa.conf
+
+	    # prevent purging of conf file by making a backup
+	    cp /etc/sane.d/epkowa.conf /etc/sane.d/bak.epkowa.conf
+	fi
+	;;
+
+    upgrade|failed-upgrade|deconfigure)
+	;;
+
+    *)
+	echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+
+esac
+
+exit 0

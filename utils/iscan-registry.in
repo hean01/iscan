@@ -1,0 +1,167 @@
+#! /bin/sh
+#  iscan-registry.in -- adds/removes information from "sub"packages
+#  Copyright (C) 2008  SEIKO EPSON CORPORATION
+#
+#  License: GPLv2+
+#  Authors: AVASYS CORPORATION
+#
+#  This file is part of the 'Image Scan! for Linux' package.
+#  This package is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License or, at
+#  your option, any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#  You ought to have received a copy of the GNU General Public License
+#  along with this package.  If not, see <http://www.gnu.org/licenses/>.
+
+
+STATEDIR=@PKGLOCALSTATEDIR@
+
+#  Output a version blurb.
+
+version () {
+    cat <<EOF
+`basename $0` (@PACKAGE_NAME@) @PACKAGE_VERSION@
+Copyright (C) 2008  @scm_src_vendor@
+This is free software.  You may redistribute copies of it under the
+terms of the GNU General Public License, version 2 or later.
+See <http://www.gnu.org/licenses/gpl.html> for details.
+
+Written by @scm_src_author@.
+EOF
+    if test xyes = x$1; then
+        echo
+        usage
+    fi
+    exit
+}
+
+#  Shows script usage documentation and exits the program with the
+#  optional status passed as its first argument.
+
+usage () {
+    cat <<EOF
+'`basename $0`' updates the run-time data for @PACKAGE_NAME@
+
+Usage: $0 --help | --version
+       $0 --add <spec>
+       $0 --remove <spec>
+
+@PACKAGE_NAME@ plugins may need to (un)register themselves.
+This utility gives plugins a common interface to do just that.  You
+should not need to use this utility manually.
+
+The following options are supported:
+
+  -h, --help              displays this message and exit
+  -v, --version           displays program version and exit
+
+  -a, --add               adds a plugin to the run-time data
+  -r, --remove            removes a plugin from the run-time data
+
+The following <spec>s are supported:
+
+  interpreter usb <vendor-id> <product-id> <plugin> [<firmware>]
+
+The <vendor-id> and <product-id> are the USB IDs in hexadecimal
+notation, prefixed with '0x'.  <plugin> and optional <firmware>
+are pathnames to the corresponding files.
+Note that the <plugin> pathname should not include an extension.
+EOF
+    exit $1
+}
+
+show_help=no
+show_vers=no
+
+run_mode=
+
+options=`getopt \
+    --options hvar \
+    --longopt help,version \
+    --longopt add,remove \
+    -- "$@"`
+
+if test 0 != $?; then
+    echo "`basename $0`: error parsing command line options" >&2
+    usage 1
+fi
+
+#  Sets and makes sure only a single run mode is specified.
+
+set_run_mode () {
+    if test x$run_mode != x; then
+        echo "`basename $0`: use only one of --add and --remove" >&2
+        exit 1
+    fi
+    run_mode=$1
+}
+
+eval set -- "$options"
+
+while test x-- != "x$1"; do
+    case "$1" in
+        -h|--help)      show_help=yes; shift;;
+        -v|--version)   show_vers=yes; shift;;
+        -a|--add)       set_run_mode add; shift;;
+        -r|--remove)    set_run_mode remove; shift;;
+        *)
+            echo "`basename $0`: internal inconsistency"
+            exit 1
+            ;;
+    esac
+done
+shift                           # past the '--' marker
+
+test xyes = x$show_vers && version $show_help
+test xyes = x$show_help && usage
+
+#  If --version or --help was specified, we will have exited by now.
+
+if test x$run_mode = x; then
+    echo "`basename $0`: at least one option is required" >&2
+    exit 1
+fi
+if test 5 -gt $# || test 6 -lt $#; then
+    echo "`basename $0`: not enough parameters" >&2
+    exit 1
+fi
+
+#  Validate at least the first argument to avoid making arbitrary
+#  files in STATEDIR.
+
+case "$1" in
+    interpreter)
+        config="$STATEDIR/$1"
+        chspec="$1 $2 $3 $4"
+        plugin="$5"
+        fwfile="$6"
+        ;;
+    *)
+        echo "`basename $0`: $1 not supported" >&2
+        exit 1
+        ;;
+esac
+
+
+case "$run_mode" in
+    add)
+        test -d "$STATEDIR" || mkdir -p "$STATEDIR"
+        echo "$chspec $plugin $fwfile" >> "$config"
+        ;;
+    remove)
+        test -f "$config" || exit 0
+        pattern=`echo "$chspec $plugin $fwfile" | sed 's|/|\\\\/|g'`
+        first=`sed -n "/$pattern/{ =; q}" "$config"`
+        test -n "${first}" && sed -i "${first}d" "$config"
+        ;;
+    *)
+        echo "`basename $0`: internal inconsistency" >&2
+        exit 1
+        ;;
+esac

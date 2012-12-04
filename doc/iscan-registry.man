@@ -1,0 +1,49 @@
+.TH ISCAN-REGISTRY 8 "2011-04-11" "Image Scan! for Linux" "System Administration Utilities"
+.SH NAME
+iscan-registry \- (un)register iscan interpreter plugins
+.SH SYNOPSIS
+.B iscan-registry
+\fI--help | --version\fR
+.br
+.B iscan-registry
+\fI--add <spec>\fR
+.br
+.B iscan-registry
+\fI--remove <spec>\fR
+.SH DESCRIPTION
+\&'iscan\-registry' updates the run\-time data for Image Scan! for Linux
+.PP
+Image Scan! for Linux plugins may need to (un)register themselves.
+This utility gives plugins a common interface to do just that.  You
+should not need to use this utility manually.
+.PP
+The following options are supported:
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+displays this message and exit
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+displays program version and exit
+.TP
+\fB\-a\fR, \fB\-\-add\fR
+adds a plugin to the run\-time data
+.TP
+\fB\-r\fR, \fB\-\-remove\fR
+removes a plugin from the run\-time data
+.PP
+The following <spec>s are supported:
+.IP
+interpreter usb <vendor\-id> <product\-id> <plugin> [<firmware>]
+.PP
+The <vendor\-id> and <product\-id> are the USB IDs in hexadecimal
+notation, prefixed with '0x'.  <plugin> and optional <firmware>
+are pathnames to the corresponding files.
+Note that the <plugin> pathname should not include an extension.
+.SH AUTHOR
+Written by AVASYS CORPORATION.
+.SH COPYRIGHT
+Copyright \(co 2008  SEIKO EPSON CORPORATION
+.br
+This is free software.  You may redistribute copies of it under the
+terms of the GNU General Public License, version 2 or later.
+See <http://www.gnu.org/licenses/gpl.html> for details.

@@ -1,0 +1,89 @@
+.TH ISCAN 1 "2011-10-19" "Image Scan! for Linux" "User Commands"
+.IX iscan
+.SH NAME
+iscan - Image Scan! for Linux SANE frontend
+.SH DESCRIPTION
+.B Image Scan! for Linux
+(iscan) provides a graphical user-interface to control
+EPSON scanners.  It allows the previewing and scanning of images.
+.B iscan 
+can be invoked either from the command-line or 
+through the GIMP image manipulation program.  
+
+When run from the command line,
+.B iscan
+acts as a stand-alone program that saves acquired images in PNM, PNG,
+JPEG, TIFF, PCX or PDF format. Alternatively, acquired images can be sent
+directly to a printer, provided your print system handles PNG natively.
+CUPS and Photo Image Print System, versions 1.3.1 and later, do this.
+LPRng and other LPD based printer systems may need a little help.
+Refer to your print system's documentation for more information on how
+to set this up.  When run as a GIMP plugin, the images are passed to
+the GIMP for further processing.
+
+.B iscan
+accesses EPSON image acquisition devices through the SANE (Scanner
+Access Now Easy) interface.
+
+.SH RUNNING UNDER THE GIMP
+As of version 1.15.0,
+.B iscan
+is automatically registered as a
+.BR gimp (1)
+plugin if you install the binary package.  In case it didn't (because
+you built from source for example), you can register it yourself by
+creating a symbolic link from the
+.B iscan
+binary to one of the
+.BR gimp (1)
+plug-ins directories. For example, for gimp-1.2.x the command
+.PP
+.RS
+ln -s /usr/bin/iscan ~/.gimp-1.2/plug-ins/
+.RE
+.PP
+adds a symlink for the
+.B iscan
+binary to the user's plug-ins directory.  Your system administrator
+can register it for all users by creating a symbolic link in the
+.BR gimp (1)
+system plug-ins directory.  After creating such a symlink,
+.B iscan
+will be queried by
+.BR gimp (1)
+the next time it's invoked.  From then on,
+.B iscan
+can be invoked through "Xtns->Acquire Image->Scanning (iscan)" menu
+entry.
+.SH PRINTER SETUP
+When not using the default printer , it is necessary to input the
+printer name from /etc/printcap into the Print Command field of the
+Configuration dialog. For example, if the printer name is pm900c,
+input the following command.
+.PP
+.RS
+lpr -Ppm900c
+.SH EPSON Scan! for Linux WORKFLOW
+Use the following steps to scan an image with iscan.
+.PP
+.RS
+.br
+1. Select the document source.
+.br
+2. Select the image type.
+.br
+3. Preview the full page.
+.br
+4. Create a marquee (frame) of the image area to scan.
+.br
+5. Auto expose the selected area.
+.br
+6. Select the image destination.
+.br
+7. Scan the final image.
+.RE
+.SH SEE ALSO
+gimp(1), gimptool(1), scanimage(1), sane-scsi(5), sane\-dll(5),
+sane\-net(5), sane\-"backendname"(5)
+.SH AUTHOR
+Noriyoshi Sasaki and Peter Schretlen

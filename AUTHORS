@@ -1,0 +1,40 @@
+"Image Scan! for Linux" was originally written by Noriyoshi Sasaki with
+help from Peter J. Schretlen.
+
+The "burden" of continued development and maintenance was passed on to
+Olaf Meeuwissen during the final stages of preparation for the release
+of version 1.4.0 and Narihiro Matsukuma joined during the preparations
+for 1.6.0 and helped out on and off until 1.14.0.  Huynh Tuan Anh lend
+a hand with 2.2.0 and 2.3.0.  Nguyen Trang Nhung helped out with 2.8.0.
+Alesh Slovak joined development in the early stages of 2.14.0 and took
+over the torch starting with the 2.20.0 release.
+
+The following people have contributed:
+
+  Ross Boylan           added resultion info to PNG images
+  Tobias Kramer         pointed out a GTK deficiency wrt locale numerics
+                        that wrecked havoc on the GIMP plugin
+  Olaf Meeuwissen       rewrote the build system from scratch to use the
+                        GNU autotools; upgraded the i18n framework; went
+                        thru the trouble of pruning all unnecessary bits
+                        from the sources (well, most at least); upgraded
+                        the sane-backends bits; merged most changes from
+                        the epson backend; overhauled the RPM spec file;
+                        completely redid the supported device info; made
+                        an interpreter module to make the epkowa backend
+                        work in the absence of any libesint*.so (it also
+                        lead to more readable code in epkowa.c); removed
+                        the most proprietary bits from the sources
+  Johannes Meixner      provided some ideas to improve the RPM packaging
+                        thru his spec files for the iscan-free and iscan
+                        packages from SUSE; sent patches to fix compiler
+                        warnings; found a buffer overflow in the backend
+                        debugging code and confirmed the fix
+  Dirk O. Siebnich      provided the initial patch that inspired support
+                        for non-i386 builds
+  Thomas Harding        provided the initial changes to fix installation
+                        conflicts with Debian's libsane-extras package
+  Khaled Hosny          contributed Arabic translations
+  Kåre Särs             pointed out bugs in backend options that are not
+                        used by iscan but may be used through other SANE
+                        frontends

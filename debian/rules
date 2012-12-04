@@ -1,0 +1,119 @@
+#! /usr/bin/make -f
+#  rules -- to create Debian packages
+#  Copyright (C) 2007, 2009  EPSON AVASYS CORPORATION
+#
+#  This file is part of the "Image Scan!" build infra-structure.
+#
+#  The "Image Scan!" build infra-structure is free software.
+#  You can redistribute it and/or modify it under the terms of the GNU
+#  General Public License as published by the Free Software Foundation;
+#  either version 2 of the License or at your option any later version.
+#
+#  This program is distributed in the hope that it will be useful, but
+#  WITHOUT ANY WARRANTY;  without even the implied warranty of FITNESS
+#  FOR A PARTICULAR PURPOSE or MERCHANTABILITY.
+#  See the GNU General Public License for more details.
+#
+#  You should have received a verbatim copy of the GNU General Public
+#  License along with this program; if not, write to:
+#
+#	 Free Software Foundation, Inc.
+#	 59 Temple Place, Suite 330
+#	 Boston, MA  02111-1307	 USA
+
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/autotools.mk
+
+
+#  Make sure that we build with all the "optional" bits.
+
+DEB_CONFIGURE_EXTRA_FLAGS += \
+	--enable-dependency-reduction \
+	--enable-frontend \
+	--enable-gimp \
+	--enable-jpeg \
+	--enable-tiff \
+	--enable-png
+
+
+#  Before even thinking of packaging up the build results in a binary
+#  package, make sure the software's very own test suite is exercised
+#  in the build environment.
+
+DEB_MAKE_CHECK_TARGET = check
+
+
+#  It only looks as if we provide 'libsane'.  All we really provide is
+#  just a SANE backend.
+
+DEB_DH_MAKESHLIBS_ARGS_ALL = --exclude=libsane
+
+
+#  Add iscan as a system-wide GIMP plug-in.
+
+DEB_DH_LINK_ARGS = \
+	usr/bin/iscan `gimptool-2.0 --gimpplugindir | sed 's,^/,,'`/plug-ins/iscan
+
+
+#  Tweak what goes into the binary package.  We don't modify dll.conf
+#  directly (but use the Debian dll.d extension).
+
+pkglibdir      = $(DEB_DESTDIR)$(DEB_CONFIGURE_PREFIX)/lib/$(DEB_SOURCE_PACKAGE)
+sanelibdir     = $(DEB_DESTDIR)$(DEB_CONFIGURE_PREFIX)/lib/sane
+sanesysconfdir = $(DEB_DESTDIR)$(DEB_CONFIGURE_SYSCONFDIR)/sane.d
+applicationdir = $(DEB_DESTDIR)$(DEB_CONFIGURE_PREFIX)/share/applications
+statedir       = $(DEB_DESTDIR)$(DEB_CONFIGURE_LOCALSTATEDIR)/lib/$(DEB_SOURCE_PACKAGE)
+
+install/$(DEB_SOURCE_PACKAGE)::
+	-rm -f $(sanelibdir)/libsane-epkowa.a
+	-rm -f $(sanelibdir)/libsane-epkowa.so
+	test -d $(sanesysconfdir)/dll.d || mkdir -p $(sanesysconfdir)/dll.d
+	test -d $(statedir)             || mkdir -p $(statedir)
+	test -d $(applicationdir)       || mkdir -p $(applicationdir)
+	test -d $(hooksdir)             || mkdir -p $(hooksdir)
+	install -m 0644 $(DEB_SRCDIR)/backend/epkowa.conf \
+	    $(sanesysconfdir)/
+	install -m 0644 $(DEB_SRCDIR)/debian/dll.conf \
+	    $(sanesysconfdir)/dll.d/$(DEB_SOURCE_PACKAGE)
+	install -m 0644 $(DEB_SRCDIR)/$(DEB_SOURCE_PACKAGE).desktop \
+	    $(applicationdir)/
+
+
+deb_subst_files = \
+	$(CURDIR)/debian/$(DEB_SOURCE_PACKAGE).postinst \
+	$(CURDIR)/debian/$(DEB_SOURCE_PACKAGE).postrm \
+	$(CURDIR)/debian/$(DEB_SOURCE_PACKAGE).preinst \
+	$(CURDIR)/debian/$(DEB_SOURCE_PACKAGE).prerm
+
+cleanbuilddir/$(DEB_SOURCE_PACKAGE)::
+	-rm $(deb_subst_files)
+
+pre-build::
+	if ! grep "~usb0\.1.*)" $(CURDIR)/debian/changelog; then \
+	    m_arch=`dpkg-architecture -qDEB_BUILD_MULTIARCH` \
+	    ltdl_v7=`find /usr/lib /usr/lib64 /lib/$$m_arch /usr/lib/$$m_arch -maxdepth 2 -name "libltdl.so.7*" 2> /dev/null`; \
+	    usb_10=`find /usr/lib /usr/lib64 /lib/$$m_arch /usr/lib/$$m_arch -maxdepth 2 -name "libusb-1.0.so.*" 2> /dev/null`; \
+	    if ! test -n "$$usb_10"; then \
+	        if test -n "$$ltdl_v7"; then \
+	            sed -i -e "1s|)|~usb0.1.ltdl7)|" $(CURDIR)/debian/changelog; \
+	        else \
+	            sed -i -e "1s|)|~usb0.1.ltdl3)|" $(CURDIR)/debian/changelog; \
+	        fi \
+	    fi \
+	fi
+	for f in $(deb_subst_files); do \
+	    sed -e 's|[@]DEB_SOURCE_PACKAGE[@]|$(DEB_SOURCE_PACKAGE)|g' \
+	        -e 's|[@]DEB_VERSION[@]|$(DEB_VERSION)|g' \
+	        -e 's|[@]DEB_CONFIGURE_PREFIX[@]|$(DEB_CONFIGURE_PREFIX)|g' \
+	        -e 's|[@]DEB_CONFIGURE_SYSCONFDIR[@]|$(DEB_CONFIGURE_SYSCONFDIR)|g' \
+	        -e 's|[@]DEB_CONFIGURE_LOCALSTATEDIR[@]|$(DEB_CONFIGURE_LOCALSTATEDIR)|g' \
+	        $$f.in > $$f; \
+	done
+	oops= ; for f in $(deb_subst_files); do \
+	    grep @DEB_ $$f >/dev/null 2>&1 && oops="$$oops $$f"; \
+	done; \
+	if test x != x"$$oops"; then \
+	    echo "unsubstituted variables in $$oops" >&2; \
+	    exit 2; \
+	fi

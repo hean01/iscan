@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<scanner_entry>
+
+  <interfaces>
+    <usb vendor="04b8" product="012b"/>
+    <net status="unsupported" note="option"/>
+  </interfaces>
+
+  <device>
+    <firmware name="ES-H300"/>
+    <model name="GT-2500"/>
+    <model name="ES-H300" region="japan"/>
+  </device>
+
+  <profile-set>
+    <profile type="reflective">
+      <rr value=" 1.0359"/><rg value="-0.0146"/><rb value="-0.0213"/>
+      <gr value="-0.0752"/><gg value=" 1.0963"/><gb value="-0.0211"/>
+      <br value="-0.0456"/><bg value="-0.3238"/><bb value=" 1.3693"/>
+    </profile>
+  </profile-set>
+
+  <command-set type="extended" level="B8">
+    <command name="set_focus_position" code="1B70" status="disabled"/>
+    <command name="feed" code="19" status="disabled"/>
+  </command-set>
+
+</scanner_entry>

@@ -1,0 +1,490 @@
+# English translations for Image Scan! for Linux package.
+# Copyright (C) 2012 SEIKO EPSON CORPORATION
+# This file is distributed under the same license as the Image Scan! for Linux package.
+# Automatically generated, 2012.
+#
+# All this catalog "translates" are quotation characters.
+# The msgids must be ASCII and therefore cannot contain real quotation
+# characters, only substitutes like grave accent (0x60), apostrophe (0x27)
+# and double quote (0x22). These substitutes look strange; see
+# http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html
+#
+# This catalog translates grave accent (0x60) and apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019).
+# It also translates pairs of apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019)
+# and pairs of quotation mark (0x22) to
+# left double quotation mark (U+201C) and right double quotation mark (U+201D).
+#
+# When output to an UTF-8 terminal, the quotation characters appear perfectly.
+# When output to an ISO-8859-1 terminal, the single quotation marks are
+# transliterated to apostrophes (by iconv in glibc 2.2 or newer) or to
+# grave/acute accent (by libiconv), and the double quotation marks are
+# transliterated to 0x22.
+# When output to an ASCII terminal, the single quotation marks are
+# transliterated to apostrophes, and the double quotation marks are
+# transliterated to 0x22.
+#
+# This catalog furthermore displays the text between the quotation marks in
+# bold face, assuming the VT100/XTerm escape sequences.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Image Scan! for Linux 2.29.1\n"
+"Report-Msgid-Bugs-To: linux-scanner@epson.jp\n"
+"POT-Creation-Date: 2012-06-12 04:33+0000\n"
+"PO-Revision-Date: 2012-06-12 04:33+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: frontend/file-selector.cc:465
+msgid "Overwrite"
+msgstr "Overwrite"
+
+#: frontend/file-selector.cc:465
+msgid "Cancel"
+msgstr "Cancel"
+
+#: frontend/file-selector.cc:746
+msgid "Save Options"
+msgstr "Save Options"
+
+#: frontend/file-selector.cc:765
+msgid "Create file with all pages"
+msgstr "Create file with all pages"
+
+#: frontend/file-selector.cc:768
+msgid "Binding Position (for Double-Sided Scanning)"
+msgstr "Binding Position (for Double-Sided Scanning)"
+
+#: frontend/file-selector.cc:769
+msgid "Left"
+msgstr "Left"
+
+#: frontend/file-selector.cc:771
+msgid "Top"
+msgstr "Top"
+
+#: frontend/file-selector.cc:776
+msgid "Determine File Type:"
+msgstr "Determine File Type:"
+
+#: frontend/file-selector.cc:835
+msgid "Start filing at:"
+msgstr "Start filing at:"
+
+#: frontend/file-selector.cc:858
+msgid "Number of digits:"
+msgstr "Number of digits:"
+
+#: frontend/pisa_aleart_dialog.cc:73 frontend/pisa_configuration.cc:204
+#: frontend/pisa_scan_selector.cc:199
+msgid "  OK  "
+msgstr "  OK  "
+
+#: frontend/pisa_configuration.cc:113 frontend/pisa_main_window.cc:849
+msgid "Configuration"
+msgstr "Configuration"
+
+#: frontend/pisa_configuration.cc:163
+msgid "Print Command"
+msgstr "Print Command"
+
+#: frontend/pisa_configuration.cc:186
+msgid ""
+"In order to print, your print system must be able to handle the PNG file "
+"format directly.  CUPS or Photo Image Print System (versions 1.3.1 or later) "
+"do this by default."
+msgstr ""
+"In order to print, your print system must be able to handle the PNG file "
+"format directly.  CUPS or Photo Image Print System (versions 1.3.1 or later) "
+"do this by default."
+
+#: frontend/pisa_configuration.cc:214 frontend/pisa_progress_window.cc:61
+#: frontend/pisa_scan_selector.cc:213 frontend/pisa_view_manager.cc:762
+msgid "  Cancel  "
+msgstr "  Cancel  "
+
+#: frontend/pisa_error.cc:85
+msgid "Operation completed succesfully."
+msgstr "Operation completed succesfully."
+
+#: frontend/pisa_error.cc:87
+msgid "Operation is not supported."
+msgstr "Operation is not supported."
+
+#: frontend/pisa_error.cc:89
+msgid "Operation was cancelled."
+msgstr "Operation was cancelled."
+
+#: frontend/pisa_error.cc:91
+msgid "Device is busy---retry later."
+msgstr "Device is busy---retry later."
+
+#: frontend/pisa_error.cc:93
+msgid "Data or argument is invalid."
+msgstr "Data or argument is invalid."
+
+#: frontend/pisa_error.cc:95
+msgid "No more data available (end-of-file)."
+msgstr "No more data available (end-of-file)."
+
+#: frontend/pisa_error.cc:97
+msgid ""
+"A paper jam occured.  Open the Automatic Document Feeder and remove any "
+"paper."
+msgstr ""
+"A paper jam occured.  Open the Automatic Document Feeder and remove any "
+"paper."
+
+#: frontend/pisa_error.cc:100
+msgid "Please load the document(s) into the Automatic Document Feeder."
+msgstr "Please load the document(s) into the Automatic Document Feeder."
+
+#: frontend/pisa_error.cc:103
+msgid ""
+"The automatic document feeder or scanner unit is open.\n"
+"Please close it."
+msgstr ""
+"The automatic document feeder or scanner unit is open.\n"
+"Please close it."
+
+#: frontend/pisa_error.cc:106
+msgid "Error during device I/O."
+msgstr "Error during device I/O."
+
+#: frontend/pisa_error.cc:108
+msgid "Out of memory."
+msgstr "Out of memory."
+
+#: frontend/pisa_error.cc:110
+msgid "Access to resource has been denied."
+msgstr "Access to resource has been denied."
+
+#: frontend/pisa_error.cc:113
+msgid "There is not enough disk space for operation"
+msgstr "There is not enough disk space for operation"
+
+#: frontend/pisa_error.cc:116
+msgid ""
+"Could not send command to scanner.\n"
+"Check the scanner's status."
+msgstr ""
+"Could not send command to scanner.\n"
+"Check the scanner's status."
+
+#: frontend/pisa_error.cc:120
+msgid "Scanner model not supported"
+msgstr "Scanner model not supported"
+
+#: frontend/pisa_error.cc:123
+msgid ""
+"Selected area is too large for this resolution.\n"
+"Reduce the selected area or resolution."
+msgstr ""
+"Selected area is too large for this resolution.\n"
+"Reduce the selected area or resolution."
+
+#: frontend/pisa_error.cc:127 frontend/pisa_error.cc:130
+msgid "Could not create file"
+msgstr "Could not create file"
+
+#: frontend/pisa_error.cc:133
+msgid ""
+"A file with the same name already exists.\n"
+"Click \"Overwrite\" to replace the file or \"Cancel\" if you want to use "
+"another file name."
+msgstr ""
+"A file with the same name already exists.\n"
+"Click “[1mOverwrite[0m” to replace the file or “[1mCancel[0m” if you want to "
+"use another file name."
+
+#: frontend/pisa_error.cc:138
+msgid ""
+"The Image Type setting you selected cannot be used with this resolution.\n"
+"Reduce the Resolution or Scale setting."
+msgstr ""
+"The Image Type setting you selected cannot be used with this resolution.\n"
+"Reduce the Resolution or Scale setting."
+
+#: frontend/pisa_error.cc:143
+msgid "Tray cover is closed.  Please open the tray cover and then scan again."
+msgstr "Tray cover is closed.  Please open the tray cover and then scan again."
+
+#: frontend/pisa_error.cc:147
+msgid ""
+"A multi page feed occurred in the auto document feeder.\n"
+"Open the cover, remove the documents, and then try again.  If documents "
+"remain on the tray, remove them and then reload them."
+msgstr ""
+"A multi page feed occurred in the auto document feeder.\n"
+"Open the cover, remove the documents, and then try again.  If documents "
+"remain on the tray, remove them and then reload them."
+
+#: frontend/pisa_error.cc:156
+msgid "Unexpected error occurred"
+msgstr "Unexpected error occurred"
+
+#: frontend/pisa_gamma_correction.cc:482
+msgid "  Reset  "
+msgstr "  Reset  "
+
+#: frontend/pisa_image_controls.cc:253
+msgid "Gamma:"
+msgstr "Gamma:"
+
+#: frontend/pisa_image_controls.cc:268
+msgid "Highlight:"
+msgstr "Highlight:"
+
+#: frontend/pisa_image_controls.cc:283
+msgid "Shadow:"
+msgstr "Shadow:"
+
+#: frontend/pisa_image_controls.cc:298
+msgid "Threshold:"
+msgstr "Threshold:"
+
+#: frontend/pisa_image_controls.cc:331
+msgid "Brightness:"
+msgstr "Brightness:"
+
+#: frontend/pisa_image_controls.cc:354
+msgid "Contrast:"
+msgstr "Contrast:"
+
+#: frontend/pisa_main_window.cc:90
+msgid "File"
+msgstr "File"
+
+#: frontend/pisa_main_window.cc:91
+msgid "Printer"
+msgstr "Printer"
+
+#: frontend/pisa_main_window.cc:104
+msgid "Flatbed"
+msgstr "Flatbed"
+
+#: frontend/pisa_main_window.cc:105
+msgid "TPU - Negative film"
+msgstr "TPU - Negative film"
+
+#: frontend/pisa_main_window.cc:106
+msgid "TPU - Positive film"
+msgstr "TPU - Positive film"
+
+#: frontend/pisa_main_window.cc:107
+msgid "ADF - Single-sided"
+msgstr "ADF - Single-sided"
+
+#: frontend/pisa_main_window.cc:108
+msgid "ADF - Double-sided"
+msgstr "ADF - Double-sided"
+
+#: frontend/pisa_main_window.cc:121
+msgid "Color Photo"
+msgstr "Color Photo"
+
+#: frontend/pisa_main_window.cc:122
+msgid "Color Document"
+msgstr "Color Document"
+
+#: frontend/pisa_main_window.cc:123
+msgid "Black & White Photo"
+msgstr "Black & White Photo"
+
+#: frontend/pisa_main_window.cc:124
+msgid "Black & White Document"
+msgstr "Black & White Document"
+
+#: frontend/pisa_main_window.cc:125
+msgid "Line Art"
+msgstr "Line Art"
+
+#: frontend/pisa_main_window.cc:169
+msgid "inches"
+msgstr "inches"
+
+#: frontend/pisa_main_window.cc:170
+msgid "pixels"
+msgstr "pixels"
+
+#: frontend/pisa_main_window.cc:171
+msgid "cm"
+msgstr "cm"
+
+#: frontend/pisa_main_window.cc:192
+msgid "Off"
+msgstr "Off"
+
+#: frontend/pisa_main_window.cc:193
+msgid "Standard"
+msgstr "Standard"
+
+#: frontend/pisa_main_window.cc:194
+msgid "Thin"
+msgstr "Thin"
+
+#: frontend/pisa_main_window.cc:299
+msgid "Calibration is failed."
+msgstr "Calibration is failed."
+
+#: frontend/pisa_main_window.cc:325
+msgid "Cleaning is failed."
+msgstr "Cleaning is failed."
+
+#: frontend/pisa_main_window.cc:831
+msgid "Scan to File"
+msgstr "Scan to File"
+
+#: frontend/pisa_main_window.cc:837
+msgid "Scan"
+msgstr "Scan"
+
+#: frontend/pisa_main_window.cc:903
+msgid "Close"
+msgstr "Close"
+
+#: frontend/pisa_main_window.cc:922
+msgid "Preview"
+msgstr "Preview"
+
+#: frontend/pisa_main_window.cc:923
+msgid "Zoom"
+msgstr "Zoom"
+
+#: frontend/pisa_main_window.cc:924
+msgid "Auto Exposure"
+msgstr "Auto Exposure"
+
+#: frontend/pisa_main_window.cc:927
+msgid "enable Start button"
+msgstr "enable Start button"
+
+#: frontend/pisa_main_window.cc:928
+msgid "Speed priority scanning"
+msgstr "Speed priority scanning"
+
+#: frontend/pisa_main_window.cc:930
+msgid "Document Size - Auto Detect"
+msgstr "Document Size - Auto Detect"
+
+#: frontend/pisa_main_window.cc:932
+msgid "Correct Document Skew"
+msgstr "Correct Document Skew"
+
+#: frontend/pisa_main_window.cc:937
+msgid "Unsharp mask"
+msgstr "Unsharp mask"
+
+#: frontend/pisa_main_window.cc:941
+msgid "Detect Double Feed (Paper Thickness)"
+msgstr "Detect Double Feed (Paper Thickness)"
+
+#: frontend/pisa_main_window.cc:1027
+msgid "Scan to Print"
+msgstr "Scan to Print"
+
+#: frontend/pisa_main_window.cc:1073
+msgid "Destination:"
+msgstr "Destination:"
+
+#: frontend/pisa_main_window.cc:1152 frontend/pisa_scan_selector.cc:142
+msgid "Scanner:"
+msgstr "Scanner:"
+
+#: frontend/pisa_main_window.cc:1175
+msgid "Document"
+msgstr "Document"
+
+#: frontend/pisa_main_window.cc:1186
+msgid "Image Controls"
+msgstr "Image Controls"
+
+#: frontend/pisa_main_window.cc:1195
+msgid "Tone Correction"
+msgstr "Tone Correction"
+
+#: frontend/pisa_main_window.cc:1233
+msgid "Document Source:"
+msgstr "Document Source:"
+
+#: frontend/pisa_main_window.cc:1266
+msgid "Image Type:"
+msgstr "Image Type:"
+
+#: frontend/pisa_main_window.cc:1278
+msgid "Resolution:"
+msgstr "Resolution:"
+
+#: frontend/pisa_main_window.cc:1327
+msgid "Target"
+msgstr "Target"
+
+#: frontend/pisa_main_window.cc:1338
+msgid "W:"
+msgstr "W:"
+
+#: frontend/pisa_main_window.cc:1350
+msgid "H:"
+msgstr "H:"
+
+#: frontend/pisa_main_window.cc:1375
+msgid "Scale"
+msgstr "Scale"
+
+#: frontend/pisa_main_window.cc:1399
+msgid "Focus"
+msgstr "Focus"
+
+#: frontend/pisa_main_window.cc:1429
+msgid "Options"
+msgstr "Options"
+
+#: frontend/pisa_main_window.cc:1720
+msgid "Calibration"
+msgstr "Calibration"
+
+#: frontend/pisa_main_window.cc:1731
+msgid "Cleaning"
+msgstr "Cleaning"
+
+#: frontend/pisa_progress_window.cc:62 frontend/pisa_view_manager.cc:774
+msgid "  Finish  "
+msgstr "  Finish  "
+
+#: frontend/pisa_progress_window.cc:171
+msgid "Scanner is warming up. Please wait..."
+msgstr "Scanner is warming up. Please wait..."
+
+#: frontend/pisa_progress_window.cc:174
+msgid "Pre-scanning in Progress"
+msgstr "Pre-scanning in Progress"
+
+#: frontend/pisa_progress_window.cc:177
+msgid "Scanning in Progress"
+msgstr "Scanning in Progress"
+
+#: frontend/pisa_progress_window.cc:180
+msgid ""
+"Starting a sequence of scans.\n"
+"Press to scanner's Start button to start each scan."
+msgstr ""
+"Starting a sequence of scans.\n"
+"Press to scanner's Start button to start each scan."
+
+#: frontend/pisa_scan_selector.cc:103
+msgid "Scan Selector Dialog"
+msgstr "Scan Selector Dialog"
+
+#: frontend/pisa_scan_selector.cc:163
+msgid "  Update  "
+msgstr "  Update  "
+
+#: frontend/pisa_view_manager.cc:762
+msgid "  Continue  "
+msgstr "  Continue  "

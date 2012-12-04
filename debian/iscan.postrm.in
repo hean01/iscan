@@ -1,0 +1,54 @@
+#! /bin/sh
+#  iscan.postrm -- things to do after package removal
+#  Copyright (C) 2009  SEIKO EPSON CORPORATION
+#
+#  License: GPLv2+
+
+
+#DEBHELPER#
+
+
+PREFIX=@DEB_CONFIGURE_PREFIX@
+SYSCONFDIR=@DEB_CONFIGURE_SYSCONFDIR@
+PACKAGE=@DEB_SOURCE_PACKAGE@
+
+undivert () {
+    file=$1
+    dest=`echo $file | sed "s|epkowa|epkowa-deb|"`
+
+    test -e $dest || return
+    dpkg-divert --package $PACKAGE --remove --rename --divert $dest $file
+}
+
+# Checks whether we need to restore the configuration file for libsane-extras
+# The criteria are that libsane-extras:
+# - has been installed and possibly uninstalled, but not purged
+# - has a version less than 1.0.19.12
+needs_restore () {
+    vers=`dpkg-query --show --showformat='${Version}' libsane-extras`
+    status=`dpkg-query --show --showformat='${Status}' libsane-extras \
+            | cut -d' ' -f1`
+    test x"install" = x"$status" -o x"deinstall" = x"$status" \
+    && dpkg --compare-versions "$vers" lt 1.0.19.12 >/dev/null 2>&1
+}
+
+if test remove = "$1"; then
+    if test /usr = "$PREFIX"; then
+	undivert /usr/lib/sane/libsane-epkowa.la
+	undivert /usr/lib/sane/libsane-epkowa.so.1
+	undivert /usr/share/man/man5/sane-epkowa.5.gz
+    fi
+fi
+
+if test purge = "$1"; then
+    if test /etc = "$SYSCONFDIR" && test -e /etc/sane.d/bak.epkowa.conf; then
+	if needs_restore; then
+	    # prevent purging of conf file by restoring backup
+	    mv /etc/sane.d/bak.epkowa.conf /etc/sane.d/epkowa.conf
+	else
+	    rm /etc/sane.d/bak.epkowa.conf
+	fi
+    fi
+fi
+
+exit 0

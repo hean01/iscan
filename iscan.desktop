@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Categories=GTK;Application;Graphics;RasterGraphics;Scanning;
+
+Name=Image Scan! for Linux
+Name[ar]=ماسح الصور إِمج-سكان!
+Comment=Scan documents and images with your Epson scanner
+Comment[ar]=امسح المستندات والصور بماسحات إبسون
+
+Exec=iscan
+Terminal=false
+Icon=scanner

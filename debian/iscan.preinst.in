@@ -1,0 +1,31 @@
+#! /bin/sh
+#  iscan.preinst -- things to do before package installation
+#  Copyright (C) 2009  SEIKO EPSON CORPORATION
+#
+#  License: GPLv2+
+
+
+#DEBHELPER#
+
+
+PREFIX=@DEB_CONFIGURE_PREFIX@
+SYSCONFDIR=@DEB_CONFIGURE_SYSCONFDIR@
+PACKAGE=@DEB_SOURCE_PACKAGE@
+
+divert () {
+    file=$1
+    dest=`echo $file | sed "s|epkowa|epkowa-deb|"`
+
+    test -e $file || return
+    dpkg-divert --package $PACKAGE --add --rename --divert $dest $file
+}
+
+if test install = "$1"; then
+    if test /usr = "$PREFIX"; then
+	divert /usr/lib/sane/libsane-epkowa.la
+	divert /usr/lib/sane/libsane-epkowa.so.1
+	divert /usr/share/man/man5/sane-epkowa.5.gz
+    fi
+fi
+
+exit 0

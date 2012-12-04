@@ -1,0 +1,6 @@
+?package(iscan):\
+	needs="X11" \
+	section="Applications/Graphics" \
+	title="Image Scan!" \
+	description="simple, easy to use scanner utility for EPSON scanners" \
+	command="/usr/bin/iscan"

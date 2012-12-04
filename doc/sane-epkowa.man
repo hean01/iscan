@@ -1,0 +1,225 @@
+.TH SANE\-EPKOWA 5 "2012-03-05" "Image Scan! for Linux"
+.IX sane\-epkowa
+.SH NAME
+sane\-epkowa - SANE backend for EPSON scanners
+.SH DESCRIPTION
+The
+.B sane\-epkowa
+library implements a SANE (Scanner Access Now Easy) backend that
+provides access to a large number of EPSON devices.  A list with
+supported device information may be found in the
+.I iscan-data
+package's documentation directory, typically
+.I /usr/share/doc/iscan-data/.
+
+.SH OPTIONS
+The options the backend supports can either be selected through command line
+options to programs like scanimage or through GUI elements in xscanimage or xsane.
+
+Valid command line options and their syntax can be listed by using 
+.RS
+scanimage \-\-help \-d epkowa
+.RE
+Not all devices support all options and not all options may be docmented below.
+.TP
+.I Scan Mode
+The 
+.I \-\-mode 
+switch selects the basic mode of operation of the scanner valid choices are 
+.I Binary, Gray and Color. 
+The Binary mode is black and white only, Gray will produce up to 256 levels of gray
+and Color means 24 bit color mode. Some scanners will internally use 36 bit color, 
+the external interface however does only support 24 bits.
+
+The
+.I \-\-halftoning
+switch selects the mode that is used in Binary mode. Valid options are None, 
+Halftone A (Hard Tone), Halftone B (Soft Tone), Halftone C (Net Screen), 
+Dither A (4x4 Bayer), Dither B (4x4 Spiral), Dither C (4x4 Net Screen), 
+Dither D (8x4 Net Screen), Text Enhanced Technology, Download pattern A, 
+and Download pattern B.
+
+The 
+.I \-\-dropout
+switch selects the so called dropout color. Valid options are None, Red, Green 
+and Blue. The default is None. The dropout color is used for 
+monochrome scanning and selects the color that is not scanned. This can be used
+to e.g. scan an original with a colored background.
+
+The
+.I \-\-brightness
+switch controls the brightness of the scan. Valid options are the numbers from \-3 to 
+3. The default is 0. The larger the brightness value, the brighter the image gets. If 
+a user defined table for the gamma correction is selected, the brightness parameter is
+not available.
+
+The
+.I \-\-sharpness
+switch sets the sharpness of the image data. Valid options are the numbers from \-2 to 
+2, with \-2 meaning "Defocus", \-1 "Defocus slightly", 0 "Normal", 1 "Sharpen slighly"
+and 2 "Sharpen". 
+
+The 
+.I \-\-gamma\-correction
+switch controls the scanner's internal gamma correction. Valid options are "Default", "User
+defined", "High density printing" "Low density printing" and "High contrast printing".
+
+The 
+.I \-\-color\-correction
+switch controls the scanner's internal color correction function. Valid options are "No 
+Correction", "Impact\-dot printers", "Thermal printers", "Ink\-jet printers" and "CRT
+monitors". The default is "CRT monitors". 
+
+The 
+.I \-\-resolution
+switch selects the resolution for a scan. Many EPSON scanners will scan in any resolution between
+the lowest and highest possible value. The list reported by the scanner can be displayed using
+the "\-\-help \-d epkowa" parameters to scanimage.
+
+The 
+.I \-\-mirror
+option controls the way the image is scanned. By reading the image data from right to left the
+image is mirored. Valid options are "yes" and "no". The default is "no".
+
+The 
+.I \-\-speed
+option can improve the scan speed in monochrome mode. Valid options are "yes" or "no", the "yes"
+option will speed up the scan if this option is supported.
+
+The 
+.I \-\-auto\-area\-segmentation 
+switch turns on the automatic area segmentation for monochrome scans. The scanner will try to 
+determine which areas are text and which contain images. The image areas will be halftoned, 
+and the text will be impoved. Valid options are "yes" and "no". The default is "yes".
+
+The 
+.I \-\-gamma\-table
+parameter can be used to download a user defined gamma table. The options takes 256 values from
+the range 0..255. In color mode this option equally affects the red, green, and blue channel.
+
+The 
+.I \-\-red\-gamma\-table 
+parameter can be used to download a user defined gamma table for the red channel. The valid
+options are the same as for \-\-gamma\-table.
+
+The 
+.I \-\-green\-gamma\-table 
+parameter can be used to download a user defined gamma table for the green channel. The valid
+options are the same as for \-\-gamma\-table.
+
+The 
+.I \-\-blue\-gamma\-table 
+parameter can be used to download a user defined gamma table for the blue channel. The valid
+options are the same as for \-\-gamma\-table.
+
+The color correction coefficients
+.I \-\-cct\-1 \-\-cct\-2 \-\-cct\-3 ... \-\-cct\-9
+will install color correction coefficients for the user defined color correction. Possible 
+values are in the range \-127..127.
+
+
+The 
+.I \-\-preview
+option requests a preview scan. The frontend software automatically selects a low 
+resolution. Valid options are "yes" and "no". The default is "no".
+
+The 
+.I \-\-preview\-speed
+options will increase the scan speed if this is supported by the scanner. Valid options
+are "yes" and "no", the default is "no".
+ 
+
+The geometry options
+.I \-l \-t \-x \-y 
+control the scan area: \-l sets the top left x coordinate, \-t the top left y coordinate, 
+\-x selects the width and \-y the height of the scan aea. All parameters are specified in
+milimeters.
+
+The
+.I \-\-quick\-format
+option lets the user select a scan area with predefined sizes. Valid parameters are "CD", 
+"A5 portrait", "A5 landscape", "Letter", "A4" and "max". The default is "max", which 
+selects the largest possible area.
+
+The
+.I \-\-source
+option selects the scan source. Valid options depend on the installed options. The default
+is "Flatbed".
+
+The 
+.I \-\-auto\-eject
+option will eject a page after scanning from the document feeder. 
+
+
+.SH CONFIGURATION FILE
+The configuration file @CONFIGDIR@/epkowa.conf specifies the device(s) that the 
+backend will use. Possible connection types are:
+.TP
+.I USB
+All supported USB devices should be recognised automatically when the
+"usb" keyword is specified.  You may have to add yourself to a
+specific system group though to get the privileges required to access
+the device.  See the configuration file for information on how to get
+unsupported devices recognised.
+.TP
+.I SCSI
+The "scsi" keyword activates detection of supported SCSI devices.  If
+your device is not recognised despite this see the configuration file
+for more information.
+.TP
+More extensive documentation is available in the comments of the
+default configuration file.
+.SH FILES
+.TP
+.I @LIBDIR@/libsane\-epkowa.a
+The static library implementing this backend.
+.TP
+.I @LIBDIR@/libsane\-epkowa.so
+The shared library implementing this backend (present on systems that
+support dynamic loading).
+.SH ENVIRONMENT
+.TP
+.B SANE_DEBUG_EPKOWA
+If the library was compiled with debug support enabled, this
+environment variable controls the debug level for this backend. The
+following, case insensitive string literals are supported (in
+increasing level of feedback): FATAL, MAJOR, MINOR, INFO, CALL, DATA,
+CMD, HEX, IMG.  Note that the last level includes the raw image data
+as obtained from the scanner and produces vast amounts of output. For
+most trouble shooting situations, the HEX level is sufficient.
+
+.TP
+.B SANE_EPSON_CMD_LVL
+This allows to override the function or command level that the backend
+uses to communicate with the scanner. The function level a scanner
+supports is determined during the initialization of the device. If the
+backend does not recognize the function level reported by the scanner
+it will default to function level B5. Valid function levels include
+A1, A2, B1, B2, B3, B4, B5, B6, B7, B8, D1, D2, D7, D8 and F5. Use
+this feature only if you know what you are doing!
+
+.SH "SEE ALSO"
+
+sane\-scsi(5), scanimage(1), xscanimage(1), xsane(1)
+
+.SH BUGS
+Sometimes the scanner is not initialized correctly. The problem can be
+resolved by killing the program and restarting it again. 
+
+.SH UNSUPPORTED DEVICES
+Note that a number of EPSON scanners require a non-free plugin before
+they can be used by the backend.
+
+The backend may be used with EPSON scanners that are not yet listed 
+under the list of supported devices. A scanner that is not recognized
+may default to the function level B3, which means that not all 
+functions that the scanner may be capable of are accessible. 
+
+If the scanner is not even recognized as an EPSON scanner it is 
+probably because the device info reported by the scanner is not in
+the correct format. Please send this information to the sane-devel
+mailing list.
+
+.SH AUTHOR
+
+AVASYS CORPORATION

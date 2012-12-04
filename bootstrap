@@ -1,0 +1,43 @@
+#! /bin/sh
+#  Copyright (C) 2006, 2009  SEIKO EPSON CORPORATION
+#
+#  This file is part of the "Image Scan!" build infra-structure.
+#
+#  The "Image Scan!" build infra-structure is free software.
+#  You can redistribute it and/or modify it under the terms of the GNU
+#  General Public License as published by the Free Software Foundation;
+#  either version 2 of the License or at your option any later version.
+#
+#  This program is distributed in the hope that it will be useful, but
+#  WITHOUT ANY WARRANTY;  without even the implied warranty of FITNESS
+#  FOR A PARTICULAR PURPOSE or MERCHANTABILITY.
+#  See the GNU General Public License for more details.
+#
+#  You should have received a verbatim copy of the GNU General Public
+#  License along with this program; if not, write to:
+#
+#      Free Software Foundation, Inc.
+#      59 Temple Place, Suite 330
+#      Boston, MA  02111-1307  USA
+
+## Requirements: automake, autoconf, libtool, pkg-config, patch.
+
+srcdir_file=`autoconf -t AC_CONFIG_SRCDIR:'$1' 2>/dev/null | sed '/^$/d'`
+test -e "$srcdir_file" \
+    || touch -d @0 "$srcdir_file"
+
+#  Unlike with some of the other utilities, the use of libtool doesn't
+#  result in the relevant autoconf macro definitions to be included in
+#  the package.
+
+test -d m4 || mkdir m4
+cp /usr/share/aclocal/libtool.m4 m4/.
+
+#  Now get everything in sync.
+
+autoreconf --install "$@"
+
+#  The patching of ltmain.sh is needed to take care of some special
+#  requirements on SANE backend libraries.  See patch for details.
+
+patch -p0 < ltmain.sh.diff

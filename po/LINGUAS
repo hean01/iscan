@@ -1,0 +1,22 @@
+# po/LINGUAS -- set of available languages/locales
+# Copyright (C) 2004, 2009  SEIKO EPSON CORPORATION
+
+# Officially supported languages/locales
+de
+es
+fr
+it
+ja
+ko
+nl
+pt
+zh_CN
+zh_TW
+
+# Contributed languages/locales
+
+ar
+
+# Language/locale variants courtesy of 'gettext'
+en@quot
+en@boldquot

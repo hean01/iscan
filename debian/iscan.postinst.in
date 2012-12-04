@@ -1,0 +1,33 @@
+#! /bin/sh
+#  iscan.postinst -- things to do after installation
+#  Copyright (C) 2008, 2009  SEIKO EPSON CORPORATION
+#
+#  License: GPLv2+
+
+
+#DEBHELPER#
+
+
+PKGLIBDIR=@DEB_CONFIGURE_PREFIX@/lib/@DEB_SOURCE_PACKAGE@
+STATE_DIR=@DEB_CONFIGURE_LOCALSTATEDIR@/lib/@DEB_SOURCE_PACKAGE@
+
+VERSION=@DEB_VERSION@
+
+PATH=$PKGLIBDIR:$PATH
+
+case "$1" in
+
+    configure)
+	;;
+
+    abort-*)
+	;;
+
+    *)
+	echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+
+esac
+
+exit 0

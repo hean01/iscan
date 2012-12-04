@@ -1,0 +1,199 @@
+
+			Image Scan! for Linux
+			=====================
+
+Copyright (C) 2010, 2012  SEIKO EPSON CORPORATION
+
+
+  ABSTRACT
+  --------
+    Image Scan! is a graphical scanner utility for people that do not
+    need all the bells and whistles provided by several of the other
+    utilities out there (xsane, QuiteInsane, Kooka).
+    At the moment it only supports SEIKO EPSON devices.  However, the
+    device driver it provides can be used by any other SANE standard
+    compliant scanner utility.
+    Note that several scanners require a non-free plugin before they
+    can be used with this software.  Using a scanner directly through
+    a network interface also requires a non-free plugin.
+
+  LICENSING
+  ---------
+    This software is primarily covered by the terms of the GNU General
+    Public License (version 2 or later) with exceptions that allow for
+    the use of several non-free plugins.
+    The graphical user interface, iscan, carries an exception to allow
+    linking with the non-free 'esmod' library.  Copies of that library
+    are included in the 'non-free/' directory and covered by the terms
+    of the AVASYS Public License.
+    The device driver (backend) carries a similar exception to provide
+    for the use of plugins.  Such plugins are packaged and distributed
+    independently from this software and are only required for certain
+    models and/or hardware options.
+
+    A verbatim copy of the GNU General Public License can be found in
+    the file 'COPYING'.  A verbatim copy of the AVASYS Public License
+    can be found in the file 'non-free/AVASYSPL.en.txt'.
+
+
+NEWS
+====
+
+  For the latest user visible changes, please refer to the 'NEWS' file.
+
+
+INSTALLATION
+============
+
+  REQUIREMENTS
+  ------------
+    The device information files provided by iscan-data must be installed
+    prior to the installion of Image Scan! for Linux.  These files are
+    necessary for Image Scan! for Linux to function properly and may be
+    downloaded via:
+
+      http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
+
+  BINARY PACKAGES
+  ---------------
+    For help on installation of Debian and RPM binary packages refer to
+    your distribution's documentation.  In most graphical environments
+    just double clicking does the right thing.  If that does not work
+    for you, you can always install from a command line with the least
+    common denominator tools as follows:
+
+    For Debian packages:
+
+      # dpkg --install iscan_$version-$release_$architecture.deb
+
+    For RPM packages:
+
+      # rpm --upgrade iscan-$version-$release.$architecture.rpm
+
+    Both commands require root user privileges and assume that package
+    dependencies have been taken care of already.
+
+  BUILDING/INSTALLING FROM SOURCE
+  -------------------------------
+    Generic installation notes can be found in the 'INSTALL' file.  See
+    the `./configure --help` output for details on additional options.
+
+    When using the `--prefix` option with configure, make sure you do
+    the same when configuring `iscan-data`, otherwise the device
+    information files necessary for the proper functioning of the
+    software will not be found.
+
+    After you have installed the software, you may need to arrange for
+    your device to be recognised automatically by the operating system
+    and give read/write permissions to the appropriate users.  Details
+    on how to do this may be found in the SANE documentation:
+
+      http://sane.alioth.debian.org/docs.html
+
+    The binary packages take care of this during their installation as
+    much as possible.
+
+    Users of Debian or RPM based Linux distributions can easily build
+    their own binary packages (if no binaries are available for their
+    distribution already).  For Debian based distributions, all you
+    have to do is:
+
+      $ tar xzf iscan_$version-$release.tar.gz
+      $ cd iscan-$version
+      $ dpkg-buildpackage -rfakeroot
+
+    Alternatively, you should be able to use any other Debian package
+    building utility.  There are just too many to document ;-)
+
+    For RPM packages, you would just:
+
+      $ rpmbuild -tb iscan_$version-$release.tar.gz
+
+    The above assumes that you have the privileges needed to build RPMs
+    or configured things to build in a user writable location.
+
+
+NON-FREE PLUGINS
+================
+
+  Non-free plugins that add support for certain models and/or hardware
+  options can be downloaded via:
+
+    http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
+
+  Plugins required and/or available for your device are listed on the
+  download page for the device.  Please be sure to download a version
+  that matches your system.
+
+
+SYSTEM REQUIREMENTS
+===================
+
+  We recommend using one of the major Linux distributions with a Linux
+  kernel version of 2.6.3 or later (you can check with `uname -r`) as
+  that is what we normally test with.
+
+  However, the software should still work with kernel versions as far
+  back as 2.4.8.  If you happen to use a pre-2.6.3 kernel version you
+  may want to take a look at the info in the 'KNOWN-PROBLEMS' file.
+
+  When scanning large originals and/or at large resolutions, the image
+  files can get pretty big, in the order of tens (or even hundreds) of
+  megabytes for each scan.  You need enough free disk space to store
+  such large images.  Also note that scanning to printer roughly needs
+  twice the disk space needed for the image in order to succeed.
+
+  The software has been designed so that it does not need to keep the
+  whole image in memory.  As a result, 'iscan' can be used on systems
+  with relatively little memory.
+
+
+OPERATION
+=========
+
+  The software can always be started with the 'iscan' command from the
+  command line or your desktop's "command runner" utility.
+  You may also find it in your desktop menu in the "Graphics" section.
+
+  PRINTING
+  --------
+    Scanning "directly" to a printer, by default, sends the image data
+    to your system's default printer using the 'lpr' command.  You can
+    modify the command used to print via the "Configuration" button.
+
+  GIMP PLUG-IN
+  ------------
+    The software can also be used as a GIMP plug-in to acquire images
+    directly from the GIMP.  After installation of a binary package,
+    the plug-in is (normally) automatically registered and available
+    from the "File" -> "Acquire" or the "File" -> "Create" menu.
+    The exact menu entries may depend on your language settings and
+    GIMP version.
+
+  OTHER SANE FRONTENDS
+  --------------------
+    If you prefer using another SANE frontend, you can use the device
+    driver included with this software by selecting a device with the
+    "epkowa:" substring in its device name.
+
+  NETWORK SCANNING
+  ----------------
+    Scanning directly via a device's network interface is supported
+    with the help of the non-free 'iscan-network-nt' package.  Once this
+    package has been installed you need to tell the 'epkowa' backend
+    what network devices it should try to access.  The details of how
+    you do this can be found in the 'epkowa.conf' file.
+    This file is included in the sources and typically installed as
+    '/etc/sane.d/epkowa.conf'.
+
+    Notes:
+     1. 'iscan' does not support setting the IP address of the device
+        itself.  Please consult the device manual for instructions on
+        how to do this.
+     2. The download site only lists the iscan-network-nt module for the
+        devices that are known to work with it.
+     3. For network scanning via a server connected device please see
+        the user manual.
+
+
+ -- AVASYS CORPORATION <http://avasys.jp/>

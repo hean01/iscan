@@ -1,0 +1,110 @@
+##  scm-build.am -- -*- automake -*- snippet to ease binary packaging
+##  Copyright (C) 2008  AVASYS CORPORATION
+##
+##  License: cc-by-sa-3.0
+##  Authors: Olaf Meeuwissen
+##
+##  This file is courtesy of the 'SCM Build' package.
+##  The 'SCM Build' package itself is free software, released under
+##  the terms of the GNU General Public License as published by the
+##  Free Software Foundation, either version 3 of the License, or (at
+##  your option) any later version.
+##
+##  This file, however, has been made available under the terms of the
+##  Creative Commons Attribution-Share Alike 3.0 Unported License.
+##  See <http://creativecommons.org/licenses/by-sa/3.0/> for details.
+##
+##  Include this file in your top-level Makefile.am and make sure that
+##  you define the following variables in that Makefile.am:
+##
+##    EXTRA_DIST
+##    MAINTAINERCLEANFILES
+##    MAINTAINERCLEANLOCAL
+
+
+##  Source packaging support
+
+
+##  Debian packaging support
+
+##  Adding files such as debian/rules.in and debian/control.in to the
+##  list of AC_CONFIG_FILES does not work as one would expect.  Files
+##  listed become candidates for removal by `make distclean`.
+##
+##  With the regular Debian build machinery doing exactly that at the
+##  very start of just about any build, said build machinery will, as
+##  a result, have understandable trouble finding usable debian/rules
+##  and debian/control files.
+
+
+EXTRA_DIST += $(scm_deb_builddir)/source/format
+MAINTAINERCLEANFILES += $(scm_deb_builddir)/source/format
+$(scm_deb_builddir)/source/format:
+	test -d $(scm_deb_builddir)/source \
+	    || $(mkinstalldirs) $(scm_deb_builddir)/source
+	echo 1.0 > $@
+
+EXTRA_DIST += $(scm_deb_builddir)/changelog
+MAINTAINERCLEANFILES += $(scm_deb_builddir)/changelog
+$(scm_deb_builddir)/changelog:
+	test -d $(scm_deb_builddir) || $(mkinstalldirs) $(scm_deb_builddir)
+	echo "$(PACKAGE_TARNAME) ($(PACKAGE_VERSION)-$(scm_src_release)) $(scm_deb_dists); urgency=$(scm_deb_urgency)" > $@
+	echo "" >> $@
+	echo "  * latest \"upstream\"" >> $@
+	echo "    See the NEWS and/or ChangeLog files for details." >> $@
+	echo "" >> $@
+	echo " -- $(scm_deb_maint) <$(scm_deb_maint_email)>  `LC_TIME=C date --rfc-2822`" >> $@
+
+.PHONY: $(scm_deb_srcdir)/changelog
+
+if !scm_deb_have_control_in
+EXTRA_DIST += $(scm_deb_srcdir)/control
+else
+EXTRA_DIST += $(scm_deb_srcdir)/control.in $(scm_deb_builddir)/control
+MAINTAINERCLEANFILES += $(scm_deb_builddir)/control
+$(scm_deb_builddir)/control: $(scm_deb_srcdir)/control.in $(top_srcdir)/configure
+	cd $(top_builddir) && $(SHELL) ./config.status --file $@:$<
+	sed -i \
+	    -e '/^Description:/,/^$$/{ s/\\$$//; s/^/ / }' \
+	    -e '/^ Description:/s/^ //' $@
+endif
+
+if !scm_deb_have_copyright_in
+EXTRA_DIST += $(scm_deb_srcdir)/copyright
+else
+EXTRA_DIST += $(scm_deb_srcdir)/copyright.in $(scm_deb_builddir)/copyright
+MAINTAINERCLEANFILES += $(scm_deb_builddir)/copyright
+$(scm_deb_builddir)/copyright: $(scm_deb_srcdir)/copyright.in $(top_srcdir)/configure
+	cd $(top_builddir) && $(SHELL) ./config.status --file $@:$<
+endif
+
+if !scm_deb_have_rules_in
+EXTRA_DIST += $(scm_deb_srcdir)/rules
+else
+EXTRA_DIST += $(scm_deb_srcdir)/rules.in $(scm_deb_builddir)/rules
+MAINTAINERCLEANFILES += $(scm_deb_builddir)/rules
+$(scm_deb_builddir)/rules: $(scm_deb_srcdir)/rules.in $(top_srcdir)/configure
+	cd $(top_builddir) && $(SHELL) ./config.status --file $@:$<
+	chmod ugo+x $@
+endif
+
+##  RPM packaging support
+
+if !scm_rpm_have_spec_in
+EXTRA_DIST += $(top_srcdir)/$(scm_rpm_spec)
+else
+EXTRA_DIST += $(top_srcdir)/$(scm_rpm_spec_in) $(top_builddir)/$(scm_rpm_spec)
+MAINTAINERCLEANFILES +=  $(top_builddir)/$(scm_rpm_spec)
+MAINTAINERCLEANLOCAL += scm-rpm-spec-file
+if scm_rpm_spec_is_srcdir_file
+scm-rpm-spec-file:
+	echo "To be generated from $(top_srcdir)/$(scm_rpm_spec_in)" \
+	    > $(top_builddir)/$(scm_rpm_spec)
+	touch -d @0 $(top_builddir)/$(scm_rpm_spec)
+endif
+$(top_builddir)/$(scm_rpm_spec): $(top_srcdir)/$(scm_rpm_spec_in) $(top_srcdir)/configure
+	cd $(top_builddir) && $(SHELL) ./config.status --file $@:$<
+	sed -i '/^%description/,/^$$/{ s/\\$$//; s/^ //; s/^\.$$// }' $@
+endif
+
+maintainer-clean-local: $(MAINTAINERCLEANLOCAL)
