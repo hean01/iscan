@@ -555,44 +555,72 @@ dip_change_GRB_to_RGB (const void *self, const buffer *buf)
   return;
 }
 
-/*! \todo Add support for 16 bit color values (#816).
- */
 void
 dip_apply_color_profile (const void *self, const buffer *buf,
                          const double profile[9])
 {
   SANE_Int i;
-  SANE_Byte *r_buf, *g_buf, *b_buf;
   double red, grn, blu;
 
-  SANE_Byte *data;
   SANE_Int size;
 
   require (dip == self && buf && profile);
-  require (8 == buf->ctx.depth);
+  require (buf->ctx.depth == 8 || buf->ctx.depth == 16);
 
   if (SANE_FRAME_RGB != buf->ctx.format)
     return;
 
-  data = buf->ptr;
-  size = buf->end - buf->ptr;
-
-  for (i = 0; i < size / 3; i++)
+  if (buf->ctx.depth == 8)
   {
-    r_buf = data;
-    g_buf = data + 1;
-    b_buf = data + 2;
+    SANE_Byte *r_buf, *g_buf, *b_buf;
+    SANE_Byte *data;
 
-    red =
-      profile[0] * (*r_buf) + profile[1] * (*g_buf) + profile[2] * (*b_buf);
-    grn =
-      profile[3] * (*r_buf) + profile[4] * (*g_buf) + profile[5] * (*b_buf);
-    blu =
-      profile[6] * (*r_buf) + profile[7] * (*g_buf) + profile[8] * (*b_buf);
+    data = buf->ptr;
+    size = buf->end - buf->ptr;
 
-    *data++ = clamp (red, 0, 255);
-    *data++ = clamp (grn, 0, 255);
-    *data++ = clamp (blu, 0, 255);
+    for (i = 0; i < size / 3; i++)
+    {
+      r_buf = data;
+      g_buf = data + 1;
+      b_buf = data + 2;
+
+      red =
+	profile[0] * (*r_buf) + profile[1] * (*g_buf) + profile[2] * (*b_buf);
+      grn =
+	profile[3] * (*r_buf) + profile[4] * (*g_buf) + profile[5] * (*b_buf);
+      blu =
+	profile[6] * (*r_buf) + profile[7] * (*g_buf) + profile[8] * (*b_buf);
+
+      *data++ = clamp (red, 0, 255);
+      *data++ = clamp (grn, 0, 255);
+      *data++ = clamp (blu, 0, 255);
+    }
+  }
+  else if (buf->ctx.depth == 16)
+  {
+    SANE_Word *r_buf, *g_buf, *b_buf;
+    SANE_Word *data;
+
+    data = (SANE_Word *)buf->ptr;
+    size = buf->end - buf->ptr;
+
+    for (i = 0; i < size / 3; i++)
+    {
+      r_buf = data;
+      g_buf = data + 1;
+      b_buf = data + 2;
+
+      red =
+	profile[0] * (*r_buf) + profile[1] * (*g_buf) + profile[2] * (*b_buf);
+      grn =
+	profile[3] * (*r_buf) + profile[4] * (*g_buf) + profile[5] * (*b_buf);
+      blu =
+	profile[6] * (*r_buf) + profile[7] * (*g_buf) + profile[8] * (*b_buf);
+
+      *data++ = clamp (red, 0, 65535);
+      *data++ = clamp (grn, 0, 65535);
+      *data++ = clamp (blu, 0, 65535);
+    }
   }
 }
 
