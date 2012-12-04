@@ -598,13 +598,11 @@ dip_apply_color_profile (const void *self, const buffer *buf,
   }
   else if (buf->ctx.depth == 16)
   {
-    SANE_Word *r_buf, *g_buf, *b_buf;
-    SANE_Word *data;
+    uint16_t *r_buf, *g_buf, *b_buf;
+    uint16_t *data;
 
-    data = (SANE_Word *)buf->ptr;
-    size = buf->end - buf->ptr;
-
-    for (i = 0; i < size / 3; i++)
+    data = (uint16_t *)buf->ptr;
+    while(data < buf->end)
     {
       r_buf = data;
       g_buf = data + 1;
