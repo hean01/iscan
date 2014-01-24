@@ -1,5 +1,5 @@
 /*  channel_scsi.c -- SCSI device communication channel
- *  Copyright (C) 2008, 2009  SEIKO EPSON CORPORATION
+ *  Copyright (C) 2008, 2009, 2013  SEIKO EPSON CORPORATION
  *
  *  License: GPLv2+|iscan
  *  Authors: AVASYS CORPORATION
@@ -90,7 +90,7 @@ static ssize_t channel_scsi_send (channel *, const void *,
 static ssize_t channel_scsi_recv (channel *, void *,
                                   size_t, SANE_Status *);
 
-static size_t channel_scsi_max_request_size (const channel *);
+static void channel_scsi_set_max_request_size (channel *, size_t);
 
 
 channel *
@@ -118,7 +118,9 @@ channel_scsi_ctor (channel *self, const char *dev_name, SANE_Status *status)
   self->send = channel_scsi_send;
   self->recv = channel_scsi_recv;
 
-  self->max_request_size = channel_scsi_max_request_size;
+  self->set_max_request_size = channel_scsi_set_max_request_size;
+
+  self->max_size = sanei_scsi_max_request_size;
 
   return self;
 }
@@ -158,8 +160,11 @@ channel_scsi_close (channel *self, SANE_Status *status)
   if (status) *status = SANE_STATUS_GOOD;
 }
 
-static size_t
-channel_scsi_max_request_size (const channel *self)
+static void
+channel_scsi_set_max_request_size (channel *self, size_t size)
 {
-  return sanei_scsi_max_request_size;
+  require (self);
+
+  self->max_size =  (size < sanei_scsi_max_request_size)
+                   ? size : sanei_scsi_max_request_size;
 }

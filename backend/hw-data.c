@@ -167,6 +167,7 @@ adf_needs_manual_centering (const device *hw)
     "LP-M6000",
     "LP-M5000",
     "LP-M5300",
+    "LP-M8040",
     "ES-H300",
     "CX9400Fax",
     "PID 087C",
@@ -245,6 +246,7 @@ large_res_kills_adf_scan (const device *hw)
     "LP-M6000",
     "LP-M5000",
     "LP-M5300",
+    "LP-M8040",
     NULL,
   };
 

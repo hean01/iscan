@@ -1,5 +1,5 @@
 /*  channel_usb.c -- USB device communication channel
- *  Copyright (C) 2008, 2009  SEIKO EPSON CORPORATION
+ *  Copyright (C) 2008, 2009, 2013  SEIKO EPSON CORPORATION
  *
  *  License: GPLv2+|iscan
  *  Authors: AVASYS CORPORATION
@@ -91,8 +91,6 @@ static ssize_t channel_usb_send (channel *, const void *,
 static ssize_t channel_usb_recv (channel *, void *,
                                  size_t, SANE_Status *);
 
-static size_t channel_usb_max_request_size (const channel *);
-
 
 channel *
 channel_usb_ctor (channel *self, const char *dev_name, SANE_Status *status)
@@ -121,7 +119,7 @@ channel_usb_ctor (channel *self, const char *dev_name, SANE_Status *status)
   self->send = channel_usb_send;
   self->recv = channel_usb_recv;
 
-  self->max_request_size = channel_usb_max_request_size;
+  self->max_size = 128 * 1024;
 
   return self;
 }
@@ -267,6 +265,9 @@ channel_interpreter_ctor (channel *self, const char *dev_name,
           self->dtor = channel_interpreter_dtor;
         }
     }
+
+  self->max_size = 32 * 1024;
+
   return self;
 }
 
@@ -281,10 +282,4 @@ channel_interpreter_dtor (channel *self)
     }
   self->dtor = channel_dtor;
   return self->dtor (self);
-}
-
-static size_t
-channel_usb_max_request_size (const channel *self)
-{
-  return (self->interpreter ? 32 : 128) * 1024;
 }

@@ -1,5 +1,5 @@
 /*  channel.h -- device communication channels
- *  Copyright (C) 2008, 2009  SEIKO EPSON CORPORATION
+ *  Copyright (C) 2008, 2009, 2013  SEIKO EPSON CORPORATION
  *
  *  License: GPLv2+|iscan
  *  Authors: AVASYS CORPORATION
@@ -101,7 +101,7 @@ typedef struct channel
   ssize_t (*recv) (struct channel *self, void *buffer,
                    size_t buf_size, SANE_Status *status);
   size_t (*max_request_size) (const struct channel *self);
-
+  void (*set_max_request_size) (struct channel *self, size_t size);
 
   char *name;
   channel_type type;
@@ -109,6 +109,7 @@ typedef struct channel
   uint16_t id;  /* target scanner ID when used with the network plugin
                  * or USB product ID
                  */
+  size_t max_size;
 
   struct interpreter_type *interpreter;
 
@@ -134,6 +135,7 @@ ssize_t channel_recv_all_retry (channel *ch, void *buffer, size_t size,
 channel *channel_dtor (channel *self);
 bool channel_is_open (const channel *self);
 size_t channel_max_request_size (const channel *self);
+void channel_set_max_request_size (struct channel *self, size_t size);
 
 #endif
 

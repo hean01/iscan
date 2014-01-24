@@ -35,8 +35,8 @@
 #  Some handy macro definitions.
 #
 %define pkg	iscan
-%define ver	2.29.1
-%define rel	5
+%define ver	2.29.3
+%define rel	1
 %define subrel	%(if test -n "%{usb_10}"; then \
                     echo '.usb1.0'; \
                   else \

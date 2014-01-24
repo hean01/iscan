@@ -1,5 +1,5 @@
 /*  channel_pio.c -- parallel device communication channel
- *  Copyright (C) 2008, 2009  SEIKO EPSON CORPORATION
+ *  Copyright (C) 2008, 2009, 2013  SEIKO EPSON CORPORATION
  *
  *  License: GPLv2+|iscan
  *  Authors: AVASYS CORPORATION
@@ -89,6 +89,8 @@ static ssize_t channel_pio_send (channel *, const void *,
 static ssize_t channel_pio_recv (channel *, void *,
                                  size_t, SANE_Status *);
 
+static void channel_pio_set_max_request_size (channel *, size_t);
+
 channel *
 channel_pio_ctor (channel *self, const char *dev_name, SANE_Status *status)
 {
@@ -100,6 +102,8 @@ channel_pio_ctor (channel *self, const char *dev_name, SANE_Status *status)
 
   self->send = channel_pio_send;
   self->recv = channel_pio_recv;
+
+  self->set_max_request_size = channel_pio_set_max_request_size;
 
   if (status) *status = SANE_STATUS_UNSUPPORTED;
   return self->dtor (self);
@@ -150,4 +154,12 @@ channel_pio_close (channel *self, SANE_Status *status)
 {
   sanei_pio_close (self->fd);
   self->fd = -1;
+}
+
+static void
+channel_pio_set_max_request_size (channel *self, size_t size)
+{
+  require (self);
+
+  self->max_size = (size < (32 * 1024)) ? size : (32 * 1024);
 }

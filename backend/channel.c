@@ -1,5 +1,5 @@
 /*  channel.c -- device communication channel
- *  Copyright (C) 2008, 2009  SEIKO EPSON CORPORATION
+ *  Copyright (C) 2008, 2009, 2013  SEIKO EPSON CORPORATION
  *
  *  License: GPLv2+|iscan
  *  Authors: AVASYS CORPORATION
@@ -126,10 +126,12 @@ channel_create (const char *dev_name, SANE_Status *status)
 
   ch->dtor    = channel_dtor;
   ch->is_open = channel_is_open;
-  ch->max_request_size = channel_max_request_size;
+  ch->max_request_size     = channel_max_request_size;
+  ch->set_max_request_size = channel_set_max_request_size;
 
-  ch->fd   = -1;
-  ch->id   =  0;
+  ch->fd = -1;
+  ch->id =  0;
+  ch->max_size = 32 * 1024;
 
   if (0 == strncmp_c (dev_name, "net:", strlen ("net:")))
     {
@@ -199,10 +201,13 @@ channel_recv (channel *ch, void *buffer, size_t size, SANE_Status *status)
 
   n = ch->recv (ch, buffer, size, status);
 
-  if (size < 256)
-    { dbg_hex (buffer, size); }
-  else
-    { dbg_img (buffer, size); }
+  if (0 < n)
+    {
+      if (size < 256)
+        { dbg_hex (buffer, n); }
+      else
+        { dbg_img (buffer, n); }
+    }
 
   log_call ("transferred %zd bytes", n);
   return n;
@@ -248,10 +253,13 @@ channel_recv_all_retry (channel *ch, void *buffer, size_t size,
      log_call ("transferred %zd bytes, total %zd/%zd", t, n, size);
    }
 
-  if (size < 256)
-    { dbg_hex (buffer, size); }
-  else
-    { dbg_img (buffer, size); }
+  if (0 < n)
+    {
+      if (size < 256)
+        { dbg_hex (buffer, n); }
+      else
+        { dbg_img (buffer, n); }
+    }
 
   if (status) *status = s;
 
@@ -267,12 +275,25 @@ channel_is_open (const struct channel *self)
 }
 
 /*! Indicates the maximum number of bytes the channel should read
- *  in a singe request. This is the "Base class" implementation.
+ *  in a singe request.
  */
 size_t
 channel_max_request_size (const struct channel *self)
 {
-  return 32 * 1024;
+  require (self);
+
+  return self->max_size;
+}
+
+/*! Change the maximum number of bytes a channel should read in a
+ *  single request.
+ */
+void
+channel_set_max_request_size (struct channel *self, size_t size)
+{
+  require (self);
+
+  self->max_size = size;
 }
 
 /*! "Base class" destructor.
