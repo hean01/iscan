@@ -19,7 +19,7 @@
    Copyright (C) 1999 Norihiko Sawa <sawa@yb3.so-net.ne.jp>
    Copyright (C) 2000 Mike Porter <mike@udel.edu> (mjp)
    Copyright (C) 1999-2004 Karl Heinz Kremer <khk@khk.net>
-   Copyright (C) 2001-2009 SEIKO EPSON CORPORATION
+   Copyright (C) 2001-2013 SEIKO EPSON CORPORATION
 
    This file is part of the EPKOWA SANE backend.
 
@@ -319,19 +319,19 @@ static const SANE_String_Const brightness_method_list[] = {
   NULL
 };
 
-#define max 100                 /* any integer value will do */
-static const SANE_Range brightness_range = { -max, max, 1};
-static const SANE_Range contrast_range   = { -max, max, 1};
+#define max_val 100                 /* any integer value will do */
+static const SANE_Range brightness_range = { -max_val, max_val, 1};
+static const SANE_Range contrast_range   = { -max_val, max_val, 1};
 #if 0
 /* We don't provide highlight and shadow options yet because we
  * haven't worked out the GIMP part of that and how that should
  * interact with the brightness-method option.  For the "iscan"
  * method, the values below are OK.
  */
-static const SANE_Range highlight_range  = { 0, max, 0 };
-static const SANE_Range shadow_range     = { 0, max, 0 };
+static const SANE_Range highlight_range  = { 0, max_val, 0 };
+static const SANE_Range shadow_range     = { 0, max_val, 0 };
 #endif
-#undef max
+#undef max_val
 
 /* Color correction:
  * One array for the actual parameters that get sent to the scanner (color_params[]),
@@ -526,36 +526,16 @@ static const media_type media_list[] = {
 static SANE_Word *bitDepthList = NULL;
 
 
-/* Some utility functions
+/* Some utility macros
  */
 
 /*! Returns the larger of the arguments \a a and \a b.
-
-  \note
-  Rather than use a macro that needs to evaluate \a a and \a b twice,
-  and is therefore unsafe, we try to inline this function where this
-  is possible.
  */
-static inline
-int
-max (int a, int b)
-{
-  return (a < b ? b : a);
-}
+#define max(a, b)  ((a) < (b) ? (b) : (a))
 
 /*! Returns the smaller of the arguments \a a and \a b.
-
-  \note
-  Rather than use a macro that needs to evaluate \a a and \a b twice,
-  and is therefore unsafe, we try to inline this function where this
-  is possible.
  */
-static inline
-int
-min (int a, int b)
-{
-  return (a < b ? a : b);
-}
+#define min(a, b)  ((a) < (b) ? (a) : (b))
 
 
 static size_t
@@ -1261,6 +1241,17 @@ create_epson_device (device **devp, channel* ch)
     {
       err_fatal ("Network channel does not support scanning via ESC commands");
       return SANE_STATUS_IO_ERROR;
+    }
+
+  /* FIXME We should use this for all devices after the LP-M8040,
+   *       maybe even for all devices that are using_fs.  For the
+   *       truly bold, just use this for any supported device. 
+   */
+  if (0 == strcmp_c ("LP-M8040", dev->fw_name))
+    {
+      size_t protocol_max = (dev->using_fs ? UINT32_MAX : UINT16_MAX);
+
+      ch->set_max_request_size (ch, min (protocol_max, 512 * 1024));
     }
 
   initialize (dev);
@@ -5017,7 +5008,6 @@ sane_start (SANE_Handle handle)
     err_fatal ("start failed (%s)", sane_strstatus (status));
     return status;
   }
-  s->raw.transfer_started = true;
 
   if (s->hw->color_shuffle == SANE_TRUE)
   {
@@ -5059,6 +5049,10 @@ sane_start (SANE_Handle handle)
     {
       s->hw->block_mode = SANE_TRUE;
       status = read_image_info_block (s->hw);
+      s->raw.transfer_started = (s->hw->block_total
+                                 * s->hw->image_block_size
+                                 + s->hw->final_block_size
+                                 > 0);
       if (SANE_STATUS_GOOD != status) return status;
 
       len_raw = s->hw->image_block_size + 1; /* for error code */
@@ -5079,6 +5073,7 @@ sane_start (SANE_Handle handle)
       s->raw.cap = len_raw;
     }
   s->raw.ptr = s->raw.end = s->raw.buf;
+  s->raw.transfer_started = true;
 
   /* This here will block sane_start() until the whole image has been
    * scanned and pre-processed.  The assumption made here is that the
@@ -5164,6 +5159,16 @@ read_image_info_block (device *hw)
   channel_recv_all_retry (hw->channel, buf, buf_size,
                           MAX_READ_ATTEMPTS, &status);
 
+  /* Prevent reporting of stale values if we bail early.
+   */
+  hw->image_block_size = 0;
+  hw->final_block_size = 0;
+  if (hw->using_fs)
+    {
+      hw->block_total = 0;
+      hw->block_count = 0;
+    }
+
   if (SANE_STATUS_GOOD != status)
     return status;
 
@@ -5175,6 +5180,23 @@ read_image_info_block (device *hw)
     return SANE_STATUS_INVAL;
   }
   hw->status = buf[1];
+
+  /* Update values here so they are also available in case we bail in
+     the while loop below.
+   */
+  if (hw->using_fs)
+    {
+      hw->image_block_size = buf_to_uint32 (buf +  2);
+      hw->final_block_size = buf_to_uint32 (buf + 10);
+      hw->block_total = buf_to_uint32 (buf + 6);
+      hw->block_count = 0;
+    }
+  else
+    {
+      hw->image_block_size = buf[3] << 8 | buf[2];
+      if (hw->block_mode)
+        hw->image_block_size *= buf[5] << 8 | buf[4];
+    }
 
   /* Although spec compliant scanners have their warming up bit set
      when they are getting ready for a scan, the world is less than
@@ -5207,22 +5229,21 @@ read_image_info_block (device *hw)
       channel_recv_all_retry (hw->channel, buf, buf_size,
                               MAX_READ_ATTEMPTS, &status);
       hw->status = buf[1];
-    }
 
-  if (hw->using_fs)
-    {
-      hw->image_block_size = buf_to_uint32 (buf +  2);
-      hw->final_block_size = buf_to_uint32 (buf + 10);
-      hw->block_total = buf_to_uint32 (buf + 6);
-      hw->block_count = 0;
+      if (hw->using_fs)
+        {
+          hw->image_block_size = buf_to_uint32 (buf +  2);
+          hw->final_block_size = buf_to_uint32 (buf + 10);
+          hw->block_total = buf_to_uint32 (buf + 6);
+          hw->block_count = 0;
+        }
+      else
+        {
+          hw->image_block_size = buf[3] << 8 | buf[2];
+          if (hw->block_mode)
+            hw->image_block_size *= buf[5] << 8 | buf[4];
+        }
     }
-  else
-    {
-      hw->image_block_size = buf[3] << 8 | buf[2];
-      if (hw->block_mode)
-        hw->image_block_size *= buf[5] << 8 | buf[4];
-    }
-
   return (ticks < limit
 	  ? status
 	  : SANE_STATUS_DEVICE_BUSY);

@@ -26,11 +26,11 @@ dnl  Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.60)
 AC_INIT([Image Scan! for Linux],
-	[2.29.1], [linux-scanner@epson.jp], [iscan])
+	[2.29.3], [linux-scanner@epson.jp], [iscan])
 
 SCM_INIT([-Wall -Werror])
 
-SCM_RELEASE([5])
+SCM_RELEASE([1])
 
 SCM_VENDOR([SEIKO EPSON CORPORATION])
 SCM_AUTHOR([AVASYS CORPORATION])
